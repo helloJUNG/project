@@ -17,7 +17,7 @@ public interface BoardMapper {
 	
 	public int modify(Board board);
 	
-	public int count(PageParam pageParam);
+	public int count();
 
 
 }

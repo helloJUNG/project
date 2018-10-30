@@ -29,7 +29,7 @@ public class BoardController {
 	private BoardService service;
 	
 	@PostMapping("/remove")
-	public String remove(PageParam pageParam, RedirectAttributes rttr) {
+	public String remove(RedirectAttributes rttr,PageParam pageParam) {
 		log.info("remove--------------------------------------------");
 		log.info(pageParam.getBno());
 		
@@ -41,7 +41,7 @@ public class BoardController {
 	}
 	
 	@PostMapping("/modify")
-	public String modify(Board board, PageParam pageParam, RedirectAttributes rttr) {
+	public String modify(RedirectAttributes rttr,Board board, PageParam pageParam) {
 		
 		int result = service.modify(board);
 		
@@ -76,6 +76,7 @@ public class BoardController {
 	@GetMapping("/list")
 	public void getList(@ModelAttribute("pageObj")PageParam pageParam, Model model){
 		
+		pageParam.setTotal(service.getTotal());
 		
 		model.addAttribute("list",service.getList(pageParam));	
 	}

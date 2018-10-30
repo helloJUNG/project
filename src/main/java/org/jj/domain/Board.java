@@ -9,7 +9,7 @@ import lombok.Data;
 @Data
 public class Board {
 
-	private Integer bno;
+	private int bno;
 	private String title,content,writer;
 	@DateTimeFormat(pattern="yyyy-MM-dd")
 	private Date updatedate, regdate;

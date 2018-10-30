@@ -9,7 +9,7 @@ import lombok.Data;
 @Data
 public class PageParam {
 
-	private int start, end, total, bno;
+	private int start, end, total,bno;
 	private int display, page;
 	private double per;
 

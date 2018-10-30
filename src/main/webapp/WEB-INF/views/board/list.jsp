@@ -43,7 +43,7 @@
 								<td class="text-center">0</td>
 								<td class="text-center"><fmt:formatDate pattern="yyyy-MM-dd hh:mm:ss" value="${board.regdate}" /></td>
 								<td class="text-center"><fmt:formatDate pattern="yyyy-MM-dd hh:mm:ss" value="${board.updatedate}"/></td>
-								<td ><button data-bno="${board.bno}" class="fas fa-trash-alt tm-trash-icon"></td>					
+								<td><div><button data-bno="${board.bno}" class="fas fa-trash-alt tm-trash-icon"></div></td>					
 							</tr>
 							</c:forEach>
 						</tbody>
@@ -104,7 +104,7 @@
 
 <form id="actionForm">
 	<input type="hidden" name="page" id="page" value="${pageObj.page}">
-	<input type="hidden" name="bno"  id="bno" value="${pageObj.bno}">
+	
 </form>
 <%@include file="../includes/footer.jsp"%>
 
@@ -123,13 +123,22 @@
 		
 		var actionForm = $("#actionForm");
 		var pageNum = ${pageObj.page};
-	
+	$('div button').on('click',function(e){
+		e.preventDefault();
+		console.log('click');
+		var input=e.target;
+		var bno=input.getAttribute('data-bno');
+		console.log(bno);
+		actionForm.attr("action","/board/remove").attr("method","post");
+		actionForm.append("<input type='hidden' name='bno' value='"+bno+"'>");
+		actionForm.submit();
+	})
 	$(".board").on("click",function(e){
 		
 		e.preventDefault();
 		
 		var bno = $(this).attr("href");
-		actionForm.find("input[name='bno']").val(bno);
+		actionForm.append("<input type='hidden' name='bno' value='"+bno+"'>");
 		actionForm.attr("action","/board/read").attr("method","get").submit();
 		
 	});

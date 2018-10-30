@@ -46,9 +46,9 @@ public class BoardServiceImpl implements BoardService {
 	}
 
 	@Override
-	public int count(PageParam pageParam) {
+	public int getTotal() {
 		// TODO Auto-generated method stub
-		return mapper.count(pageParam);
+		return mapper.count();
 	}
 
 }

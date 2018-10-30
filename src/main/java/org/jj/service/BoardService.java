@@ -17,6 +17,6 @@ public interface BoardService {
 	
 	public int register(Board board);
 	
-	public int count(PageParam pageParam);
+	public int getTotal();
 
 }
