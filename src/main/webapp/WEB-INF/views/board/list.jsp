@@ -36,14 +36,14 @@
 						<tbody>
 							<c:forEach items="${list}" var="board">
 							<tr>
-								<th scope="row"><input type="checkbox"aria-label="Checkbox"></th>
+								<th scope="row"><input type="checkbox" aria-label="Checkbox"></th>
 								<td class="text-center"><c:out value="${board.bno}"></c:out></td>
-								<td class="text-center"><c:out value="${board.title}"></c:out></td>
+								<td class="text-center"><a href="${board.bno}" class="board"><c:out value="${board.title}" /></a></td>
 								<td class="text-center"><c:out value="${board.writer}"></c:out></td>
 								<td class="text-center">0</td>
 								<td class="text-center"><fmt:formatDate pattern="yyyy-MM-dd hh:mm:ss" value="${board.regdate}" /></td>
 								<td class="text-center"><fmt:formatDate pattern="yyyy-MM-dd hh:mm:ss" value="${board.updatedate}"/></td>
-								<td><i class="fas fa-trash-alt tm-trash-icon"></i></td>
+								<td ><button data-bno="${board.bno}" class="fas fa-trash-alt tm-trash-icon"></td>					
 							</tr>
 							</c:forEach>
 						</tbody>
@@ -57,20 +57,20 @@
 					<div class="tm-table-actions-col-right">
 						<span class="tm-pagination-label"></span>
 						<nav aria-label="Page navigation" class="d-inline-block">
-						<%-- 	<ul class="pagination tm-pagination">
+							<ul class="pagination tm-pagination">
 								<c:if test ="${pageObj.prev}">
 								<li class="page-item active"><a class="page-link" href="${pageObj.start-1}}">Prev</a></li>
 								</c:if>
 								
-								<c:forEach begin="${pageObj.start}" end="{pageObj.end}" var="num">
-								<li class="page-item" data-page='${num}'><a class="page-link"  href="${num}"><c:out value="${num}"></c:out></a></li>
+								<c:forEach begin="${pageObj.start}" end="${pageObj.end}" var="num">
+								<li class="page-item" ><a data-page='${num}' class="page-link"  href="${num}"><c:out value="${num}"></c:out></a></li>
 								</c:forEach>
 								
 								<c:if test="${pageObj.next}">
 								<li class="page-item"><a class="page-link" href="${pageObj.end+1}">Next</a></li>
 								</c:if>
 						
-							</ul> --%>
+							</ul> 
 						</nav>
 					</div>
 				</div>
@@ -80,27 +80,79 @@
 
 	</div>
 	
-</div>
+	<!-- Modal -->
+	<div class="modal fade" id="myModal" tabindex="-1" role="dialog"
+		aria-labelledby="myModalLabel" aria-hidden="true">
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal"
+						aria-hidden="true">&times;</button>
+					<h4 class="modal-title" id="myModalLabel"></h4>
+				</div>
+				<div class="modal-body"></div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+				</div>
+			</div>
+			<!-- /.modal-content -->
+		</div>
+		<!-- /.modal-dialog -->
+	</div>
+	<!-- /.modal -->
+	
+
 <form id="actionForm">
 	<input type="hidden" name="page" id="page" value="${pageObj.page}">
+	<input type="hidden" name="bno"  id="bno" value="${pageObj.bno}">
 </form>
 <%@include file="../includes/footer.jsp"%>
 
 <script>
-	/* $(document).ready(function(){
+	 $(document).ready(function(){
+		 
+	
+
+		var result = '<c:out value="${result}"/>';
+		var msg = $("#myModal");
+		if (result === 'SUCCESS') {
+			$(".modal-body").html("작업성공!");
+			msg.modal('show');
+			
+		}
 		
 		var actionForm = $("#actionForm");
 		var pageNum = ${pageObj.page};
+	
+	$(".board").on("click",function(e){
+		
+		e.preventDefault();
+		
+		var bno = $(this).attr("href");
+		actionForm.find("input[name='bno']").val(bno);
+		actionForm.attr("action","/board/read").attr("method","get").submit();
+		
+	});
+	
+/* 	$("input[name=removeBtn]").on("click",function(e){
+		
+		console.log($("input[name=removeBtn]")).attr("data-bno"));
+		
+		actionForm.attr("action","/board/remove").attr("method","post");
+		actionForm.find("input[name='bno']").val($("input[name=removeBtn]").attr("data-bno"));
+		//actionForm.submit();
+	}); */
 		
 	$('.pagination tm-pagination li[data-page ='+pageNum+']').addClass("active");
 		
-	$('.pagination li a').on("click",function(e){
+	$('.page-link').on("click",function(e){
 			
-			e.preventDefault(); //기본동작을 막아버림... 눌려도 아무변화가 없다.
+			e.preventDefault();
 			var target = $(this).attr("href");
 			console.log(target);
 			$("#page").val(target);
 			actionForm.attr("action","/board/list").attr("method","get").submit();
 		
-	}); */
+	  });
+});
 </script>

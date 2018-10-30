@@ -5,7 +5,7 @@
 <mapper namespace="org.jj.mapper.BoardMapper">
 
 	<select id="getList" resultType="org.jj.domain.Board">
-		select * from tbl_board order by bno desc
+		select * from tbl_board where del='N' order by bno desc limit #{skip}, #{display}
 	</select>
 
 	<select id="get" resultType="org.jj.domain.Board">
@@ -20,11 +20,11 @@ insert into tbl_board(title,content,writer) values(#{title},#{content},#{writer}
 ]]>
 	</insert>
 
-	<delete id="delete">
-<![CDATA[
+	<update id="delete">
+
  update tbl_board set del='Y' where bno = #{bno}
- ]]>
-	</delete>
+
+	</update>
 
 	<update id="modify">
 <![CDATA[
