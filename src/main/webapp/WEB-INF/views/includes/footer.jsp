@@ -10,11 +10,11 @@
         </footer>
     </div>
 
-    <script src="js/jquery-3.3.1.min.js"></script>
+    <script src="/resources/js/jquery-3.3.1.min.js"></script>
     <!-- https://jquery.com/download/ -->
-    <script src="jquery-ui-datepicker/jquery-ui.min.js"></script>
+    <script src="/resources/jquery-ui-datepicker/jquery-ui.min.js"></script>
     <!-- https://jqueryui.com/download/ -->
-    <script src="js/bootstrap.min.js"></script>
+    <script src="/resources/js/bootstrap.min.js"></script>
     <!-- https://getbootstrap.com/ -->
     <script>
         $(function () {

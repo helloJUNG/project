@@ -16,11 +16,13 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import lombok.Setter;
+import lombok.extern.log4j.Log4j;
 
 @Controller
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration("file:src/main/webapp/WEB-INF/spring/root-context.xml")
 @RequestMapping("/board/*")
+@Log4j
 public class BoardController {
 
 	@Setter(onMethod_=@Autowired)

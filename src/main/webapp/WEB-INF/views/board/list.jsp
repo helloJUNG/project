@@ -6,10 +6,11 @@
 
 	<!-- row -->
 	<div class="row tm-content-row tm-mt-big">
-		<div class="col-xl-8 col-lg-12 tm-md-12 tm-sm-12 tm-col">
+	
+		<div class="col-xl-12 col-lg-12 tm-md-12 tm-sm-12 tm-col">
 			<div class="bg-white tm-block h-100">
 				<div class="row">
-					<div class="col-md-8 col-sm-12">
+					<div class="col-md-12 col-sm-12">
 						<h2 class="tm-block-title d-inline-block">Board</h2>
 
 					</div>
@@ -26,7 +27,9 @@
 								<th scope="col" class="text-center">bno</th>
 								<th scope="col" class="text-center">title</th>
 								<th scope="col" class="text-center">writer</th>
+								<th scope="col" class="text-center">hit</th>
 								<th scope="col" class="text-center">regdate</th>
+								<th scope="col" class="text-center">updatedate</th>
 								<th scope="col">&nbsp;</th>
 							</tr>
 						</thead>
@@ -37,7 +40,9 @@
 								<td class="text-center"><c:out value="${board.bno}"></c:out></td>
 								<td class="text-center"><c:out value="${board.title}"></c:out></td>
 								<td class="text-center"><c:out value="${board.writer}"></c:out></td>
+								<td class="text-center">0</td>
 								<td class="text-center"><fmt:formatDate pattern="yyyy-MM-dd hh:mm:ss" value="${board.regdate}" /></td>
+								<td class="text-center"><fmt:formatDate pattern="yyyy-MM-dd hh:mm:ss" value="${board.updatedate}"/></td>
 								<td><i class="fas fa-trash-alt tm-trash-icon"></i></td>
 							</tr>
 							</c:forEach>

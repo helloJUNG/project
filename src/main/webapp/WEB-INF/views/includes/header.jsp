@@ -19,7 +19,7 @@
     <!-- https://fonts.google.com/specimen/Open+Sans -->
     <link rel="stylesheet" href="/resources/css/fontawesome.min.css">
     <!-- https://fontawesome.com/ -->
-    <link rel="stylesheet" href="jquery-ui-datepicker/jquery-ui.min.css" type="text/css" />
+    <link rel="stylesheet" href="/resources/jquery-ui-datepicker/jquery-ui.min.css" type="text/css" />
     <!-- http://api.jqueryui.com/datepicker/ -->
     <link rel="stylesheet" href="/resources/css/bootstrap.min.css">
     <!-- https://getbootstrap.com/ -->
