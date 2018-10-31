@@ -6,26 +6,31 @@
 	xsi:schemaLocation="http://mybatis.org/schema/mybatis-spring http://mybatis.org/schema/mybatis-spring-1.2.xsd
 		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
 		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.3.xsd">
-	
+
 	<!-- Root Context: defines shared resources visible to all other web components -->
 	<bean id="hikariConfig" class="com.zaxxer.hikari.HikariConfig">
+		<property name="jdbcUrl"
+			value="jdbc:mysql://localhost:3306/jj?useSSL=false&amp;serverTimezone=Asia/Seoul&amp;logger=com.mysql.jdbc.log.Slf4JLogger&amp;profileSQL=false&amp;allowPublicKeyRetrieval=true"></property>
 		<property name="driverClassName"
 			value="com.mysql.jdbc.Driver"></property>
-		<property name="jdbcUrl"
-			value="jdbc:mysql://10.10.10.105:3306/jj?useSSL=false&amp;serverTimezone=Asia/Seoul&amp;logger=com.mysql.jdbc.log.Slf4JLogger&amp;profileSQL=true&amp;allowPublicKeyRetrieval=true"></property>
 		<property name="username" value="zziggu"></property>
-		<property name="password" value="zziggu"></property>
+		<property name="password" value="12345678"></property>
 	</bean>
+
 	<bean id="dataSource" class="com.zaxxer.hikari.HikariDataSource">
+
 		<constructor-arg ref="hikariConfig"></constructor-arg>
+
 	</bean>
+
 
 	<bean id="sqlSessionFactory"
 		class="org.mybatis.spring.SqlSessionFactoryBean">
 		<property name="dataSource" ref="dataSource" />
 	</bean>
-	
-    <mybatis-spring:scan base-package="org.jj.mapper"/>
-    
-    <context:component-scan base-package="org.jj.service"></context:component-scan>	
+
+	<mybatis-spring:scan base-package="org.jj.mapper" />
+
+	<context:component-scan
+		base-package="org.jj.service"></context:component-scan>
 </beans>

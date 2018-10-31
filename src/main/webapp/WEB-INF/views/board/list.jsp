@@ -12,17 +12,7 @@
 			<div class="row">
 				<div class="col-md-12 col-sm-12">
 					<h2 class="tm-block-title d-inline-block">Board</h2>
-					<div>
-					<select name="type">
-						<option <c:out value="${pageObj.type == null?'selected':'' }"/>>--</option>
-						<option value="t"<c:out value="${pageObj.type == 't'?'selected':'' }"/>>제목</option>
-						<option value="c"<c:out value="${pageObj.type == 'c'?'selected':'' }"/>>내용</option>
-						<option value="w"<c:out value="${pageObj.type == 'w'?'selected':'' }"/>>작성자</option>
-						<option value="tc"<c:out value="${pageObj.type == 'tc'?'selected':'' }"/>>제목+내용</option>
-						<option value="tcw"<c:out value="${pageObj.type == 'tcw'?'selected':'' }"/>>제목+내용+작성자</option>
-					</select> <input type='text' name='keyword' value="${pageObj.keyword}">
-					<button id="searchBtn">Search</button>
-				</div>
+				
 			     
 				</div>
 				
@@ -71,7 +61,17 @@
 					</tbody>
 				</table>
 			</div>
-				
+				<div>
+					<select name="type">
+						<option <c:out value="${pageObj.type == null?'selected':'' }"/>>--</option>
+						<option value="t"<c:out value="${pageObj.type == 't'?'selected':'' }"/>>제목</option>
+						<option value="c"<c:out value="${pageObj.type == 'c'?'selected':'' }"/>>내용</option>
+						<option value="w"<c:out value="${pageObj.type == 'w'?'selected':'' }"/>>작성자</option>
+						<option value="tc"<c:out value="${pageObj.type == 'tc'?'selected':'' }"/>>제목+내용</option>
+						<option value="tcw"<c:out value="${pageObj.type == 'tcw'?'selected':'' }"/>>제목+내용+작성자</option>
+					</select> <input type='text' name='keyword' value="${pageObj.keyword}">
+					<button id="searchBtn">Search</button>
+				</div>	
 	
 		 <div class="tm-table-mt tm-table-actions-row">
 				<ul class="pagination tm-pagination">
@@ -122,6 +122,8 @@
 	
 <form id="actionForm">
 	<input type="hidden" name="page" id="page" value="${pageObj.page}">
+	<input type="hidden" name="keyword" id="keyword" value="${pageObj.keyword}" >
+	<input type="hidden" name="type" id ="type" value="${pageObj.type}">
 </form>	
 
 
