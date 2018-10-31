@@ -5,12 +5,14 @@ package org.jj.domain;
 import org.springframework.web.util.UriComponentsBuilder;
 
 import lombok.Data;
+import lombok.extern.log4j.Log4j;
 
 @Data
+@Log4j
 public class PageParam {
 
-	private int start, end, total,bno;
-	private int display, page;
+	private int start,end,total,bno;
+	private int display,page;
 	private double per;
 
 	private boolean prev, next;
@@ -19,17 +21,18 @@ public class PageParam {
 
 		this.page = 1;
 		this.display = 10;
-		this.per = (double) this.display;
+		this.per = (double)(this.display);
 	}
 
-	public void setTotal(int Total) {
+	public void setTotal(int total) {
 
 		this.total = total;
-		this.end = (int) (Math.ceil(this.page / this.per)) * this.display;
+		this.end = (int)(Math.ceil(this.page / this.per)) * this.display;
 		this.start = this.end - this.display + 1;
+		
 
 		if (this.end * this.display >= total) {
-			this.end = (int) (Math.ceil(this.total / this.per));
+			this.end = (int)(Math.ceil(this.total / this.per));
 			this.next = false;
 		} else {
 			this.next = true;
@@ -57,6 +60,6 @@ public class PageParam {
 	public String getLink(String path) {
 
 		return UriComponentsBuilder.fromPath(path)
-				.queryParam("bno", this.bno).queryParam("page", this.page).toString();
+				.queryParam("bno", this.bno).queryParam("page", this.page).toUriString();
 	}
 }

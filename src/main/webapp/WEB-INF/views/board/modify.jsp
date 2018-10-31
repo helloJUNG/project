@@ -18,10 +18,10 @@ form {
 					<h2 class="tm-block-title d-inline-block">Modify</h2>
 				</div>
 			</div>
+
 			<div class="row col-xl-12 col-lg-12 col-md-12 col-sm-12">
 				<form role="form" action="/board/modify" method="post">
-					<input type="hidden" name="bno" value="${board.bno}">
-
+					 <input type="hidden" name="bno" value="${board.bno}">
 					<div class="form-group">
 						<label class="col-xl-4 col-lg-4 col-md-4 col-sm-5 col-form-label">
 							Title </label> <input id="title" name="title" type="text" required
@@ -43,7 +43,6 @@ form {
 							rows="3" name="content" required><c:out
 								value="${board.content}" />"</textarea>
 					</div>
-					
 					<button type="submit" class="btn btn-small btn-primary">Modify</button>
 				</form>
 			</div>
@@ -53,8 +52,8 @@ form {
 					Button</button>
 			</form>
 			<form role="form" action="/board/remove" method="post">
-				<input type="hidden" name="page" value="${pageObj.page}"> <input
-					type="hidden" name="bno" value="${pageObj.bno}">
+				<input type="hidden" name="page" value="${pageObj.page}"> 
+				<input type="hidden" name="bno" value="${pageObj.bno}">
 				<button type="sumbit" class="btn btn-danger">Remove</button>
 			</form>
 		</div>

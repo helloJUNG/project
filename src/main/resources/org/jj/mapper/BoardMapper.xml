@@ -4,39 +4,39 @@
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="org.jj.mapper.BoardMapper">
 
-	<select id="getList" resultType="org.jj.domain.Board">
-		select * from tbl_board where del='N' order by bno desc limit #{skip}, #{display}
-	</select>
+<select id="getList" resultType="org.jj.domain.Board">
+	select * from tbl_board
+	 where del='N' order by bno desc
+	  limit #{skip},#{display}
+</select>
 
-	<select id="get" resultType="org.jj.domain.Board">
-<![CDATA[
-select * from tbl_board where bno=#{bno}
-]]>
-	</select>
+<select id="get" resultType="org.jj.domain.Board">
+	<![CDATA[
+	select * from tbl_board where bno=#{bno}
+	]]>
+</select>
 
-	<insert id="insert">
-<![CDATA[
-insert into tbl_board(title,content,writer) values(#{title},#{content},#{writer}) 
-]]>
-	</insert>
+<insert id="insert">
+	<![CDATA[
+	insert into tbl_board(title,content,writer) values(#{title},#{content},#{writer}) 
+	]]>
+</insert>
 
-	<update id="delete">
+<update id="delete">
 
- update tbl_board set del='Y' where bno = #{bno}
+ 	update tbl_board set del='Y' where bno = #{bno}
 
-	</update>
+</update>
 
-	<update id="modify">
-<![CDATA[
-update tbl_board set title = #{title}, content = #{content}, writer = 
-#{writer} where bno = #{bno}
- ]]>
-	</update>
+<update id="modify">
+	<![CDATA[
+	update tbl_board set title = #{title}, content = #{content}, writer = 
+	#{writer} where bno = #{bno}
+ 	]]>
+</update>
 
-	<select id="count" resultType="int">
-
+<select id="count" resultType="int">
 		select count(*)
-		from tbl_board
-	
-	</select>
+		from tbl_board where del='N'
+</select>
 </mapper>

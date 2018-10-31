@@ -76,7 +76,10 @@ public class BoardController {
 	@GetMapping("/list")
 	public void getList(@ModelAttribute("pageObj")PageParam pageParam, Model model){
 		
+		log.info("total: "+ service.getTotal());
 		pageParam.setTotal(service.getTotal());
+		
+		log.info("page:  " + pageParam);
 		
 		model.addAttribute("list",service.getList(pageParam));	
 	}
