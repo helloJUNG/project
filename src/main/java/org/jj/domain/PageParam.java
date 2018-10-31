@@ -5,10 +5,8 @@ package org.jj.domain;
 import org.springframework.web.util.UriComponentsBuilder;
 
 import lombok.Data;
-import lombok.extern.log4j.Log4j;
 
 @Data
-@Log4j
 public class PageParam {
 
 	private int start,end,total,bno;
@@ -16,6 +14,10 @@ public class PageParam {
 	private double per;
 
 	private boolean prev, next;
+	
+	private String type;
+	private String types[];
+	private String keyword;
 
 	public PageParam() {
 
@@ -61,5 +63,16 @@ public class PageParam {
 
 		return UriComponentsBuilder.fromPath(path)
 				.queryParam("bno", this.bno).queryParam("page", this.page).toUriString();
+	}
+	
+	public void setType(String type) {
+		
+		this.type = type;
+		if(type == null || type.trim().length() == 0) {
+			
+			this.types = null;
+			return;
+		}
+		this.types = type.split("");
 	}
 }

@@ -12,14 +12,18 @@
 			<div class="row">
 				<div class="col-md-12 col-sm-12">
 					<h2 class="tm-block-title d-inline-block">Board</h2>
-			
-			     <%--  <form id="pageForm" action="/board/list" method="get">		
-					<select name="pageType">
-						<option value="${pageObj.display}">10</option>
-						<option value="${pageObj.display+10}">20</option>
-						<option value="${pageObj.display+30}">50</option>
-					</select>
-				  </form> --%>
+					<div>
+					<select name="type">
+						<option <c:out value="${pageObj.type == null?'selected':'' }"/>>--</option>
+						<option value="t"<c:out value="${pageObj.type == 't'?'selected':'' }"/>>제목</option>
+						<option value="c"<c:out value="${pageObj.type == 'c'?'selected':'' }"/>>내용</option>
+						<option value="w"<c:out value="${pageObj.type == 'w'?'selected':'' }"/>>작성자</option>
+						<option value="tc"<c:out value="${pageObj.type == 'tc'?'selected':'' }"/>>제목+내용</option>
+						<option value="tcw"<c:out value="${pageObj.type == 'tcw'?'selected':'' }"/>>제목+내용+작성자</option>
+					</select> <input type='text' name='keyword' value="${pageObj.keyword}">
+					<button id="searchBtn">Search</button>
+				</div>
+			     
 				</div>
 				
 					
@@ -67,9 +71,8 @@
 					</tbody>
 				</table>
 			</div>
-			
-
-
+				
+	
 		 <div class="tm-table-mt tm-table-actions-row">
 				<ul class="pagination tm-pagination">
 					<c:if test="${pageObj.prev}">
@@ -171,8 +174,30 @@ $(document).ready(function(){
 			$(".modal-body").html("작업성공!");
 			msg.modal('show');
 						
-			}
+		}		
+	}
+	
+	$("#searchBtn").on("click",function(e){
+		
+		var searchTypeValue =$("select[name='type'] option:selected").val();
+		
+		var searchKeyword = $("input[name='keyword']").val();
+		console.log(searchKeyword);
+		if(searchKeyword.trim().length == 0){
+			
+			alert("검색어없음");
+			
+			return;
 		}
+		
+		actionForm.attr("action","/board/list");
+		$("#keyword").val(searchKeyword);
+		actionForm.find("input[name='type']").val(searchTypeValue);
+		$("#page").val(1);
+		
+		actionForm.submit();
+		
+	});
 		
 	
 	/* $('div button').on('click',function(e){
