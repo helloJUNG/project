@@ -12,12 +12,17 @@
 			<div class="row">
 				<div class="col-md-12 col-sm-12">
 					<h2 class="tm-block-title d-inline-block">Board</h2>
-				
-			     
+					  <div class="input-group mb-3"> 
+					  	<label for="category" class="col-xl-4 col-lg-4 col-md-4 col-sm-5 col-form-label">select list amount</label>
+						<select name="display" class="custom-select col-xl-3 col-lg-3 col-md-3 col-sm-3" id="category">
+						  <option value="10"<c:out value="${pageObj.display == 10 ?'selected':'' }"/>>10-list in this page</option>
+						  <option value="20"<c:out value="${pageObj.display == '20'?'selected':'' }"/>>20-list</option>
+						  <option value="50"<c:out value="${pageObj.display == '50'?'selected':'' }"/>>50-list</option>
+						</select> 
+						<input type='hidden' name='display' value="${pageObj.display}">
+					</div>
 				</div>
-				
-					
-				
+
 				<div class="col-md-4 col-sm-12 text-right">
 					<a href="/board/register" class="btn btn-danger">Register</a>
 				</div>
@@ -61,16 +66,17 @@
 					</tbody>
 				</table>
 			</div>
-				<div>
-					<select name="type">
+				<div class="input-group mb-3">
+					<select name="type" class="custom-select col-xl-9 col-lg-8 col-md-8 col-sm-7">
 						<option <c:out value="${pageObj.type == null?'selected':'' }"/>>--</option>
 						<option value="t"<c:out value="${pageObj.type == 't'?'selected':'' }"/>>제목</option>
 						<option value="c"<c:out value="${pageObj.type == 'c'?'selected':'' }"/>>내용</option>
 						<option value="w"<c:out value="${pageObj.type == 'w'?'selected':'' }"/>>작성자</option>
 						<option value="tc"<c:out value="${pageObj.type == 'tc'?'selected':'' }"/>>제목+내용</option>
 						<option value="tcw"<c:out value="${pageObj.type == 'tcw'?'selected':'' }"/>>제목+내용+작성자</option>
-					</select> <input type='text' name='keyword' value="${pageObj.keyword}">
-					<button id="searchBtn">Search</button>
+					</select> 
+					<input type='text' name='keyword' value="${pageObj.keyword}" class="form-control validate col-xl-9 col-lg-8 col-md-8 col-sm-7">
+					<button class="btn btn-danger" id="searchBtn">Search</button>
 				</div>	
 	
 		 <div class="tm-table-mt tm-table-actions-row">
@@ -124,6 +130,7 @@
 	<input type="hidden" name="page" id="page" value="${pageObj.page}">
 	<input type="hidden" name="keyword" id="keyword" value="${pageObj.keyword}" >
 	<input type="hidden" name="type" id ="type" value="${pageObj.type}">
+	<input type="hidden" name="display" id="display" value="${pageObj.display}">
 </form>	
 
 
@@ -182,7 +189,6 @@ $(document).ready(function(){
 	$("#searchBtn").on("click",function(e){
 		
 		var searchTypeValue =$("select[name='type'] option:selected").val();
-		
 		var searchKeyword = $("input[name='keyword']").val();
 		console.log(searchKeyword);
 		if(searchKeyword.trim().length == 0){
@@ -195,12 +201,19 @@ $(document).ready(function(){
 		actionForm.attr("action","/board/list");
 		$("#keyword").val(searchKeyword);
 		actionForm.find("input[name='type']").val(searchTypeValue);
-		$("#page").val(1);
-		
-		actionForm.submit();
-		
+		$("#page").val(1);		
+		actionForm.submit();		
 	});
+	
+	$("select[name='display']").change(function(e){
 		
+		var displayValue =$("select[name='display'] option:selected").val();
+		
+		actionForm.attr("action","/board/list");
+		actionForm.find("input[name='display']").val(displayValue);
+		$("#page").val(1);		
+		actionForm.submit();		
+	});
 	
 	/* $('div button').on('click',function(e){
 		e.preventDefault();

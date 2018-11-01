@@ -45,12 +45,14 @@ form {
 					</div>
 				</form>
 				<form role="form" action="/board/modify" method="get">
-					<input type="hidden" name="page" value="${pageObj.page}"> <input
-						type="hidden" name="bno" value="${board.bno}">
+					 <input type="hidden" name="page" value="${pageObj.page}">
+					 <input type="hidden" name="bno" value="${board.bno}">
+					 <input type="hidden" name="display" id="display" value="${pageObj.display}">
 					<button type="submit" class="btn btn-small btn-primary">Modify</button>
 				</form>
 				<form role="form" action="/board/list" method="get">
 					<input type="hidden" name="page" value="${pageObj.page}">
+					<input type="hidden" name="display" id="display" value="${pageObj.display}">
 					<button type="submit" class="btn btn-small btn-primary">List
 						Button</button>
 				</form>

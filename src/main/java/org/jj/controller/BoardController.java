@@ -37,14 +37,14 @@ public class BoardController {
 		
 		rttr.addFlashAttribute("result", result == 1? "SUCCESS":"FAIL");
 		
-		return "redirect:/board/list?page=" + pageParam.getPage();
+		return "redirect:/board/list?page=" + pageParam.getPage()+"&display="+pageParam.getDisplay();
 	}
 	
 	@PostMapping("/modify")
 	public String modify(RedirectAttributes rttr,Board board, PageParam pageParam) {
 		
 		int result = service.modify(board);
-		
+		log.info(pageParam);
 		rttr.addFlashAttribute("result", result == 1? "SUCCESS":"FAIL");
 		
 		return pageParam.getLink("redirect:/board/read");

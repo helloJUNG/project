@@ -48,12 +48,14 @@ form {
 			</div>
 			<form role="form" action="/board/list" method="get">
 				<input type="hidden" name="page" value="${pageObj.page}">
+				<input type="hidden" name="display" id="display" value="${pageObj.display}">
 				<button type="submit" class="btn btn-small btn-primary">List
 					Button</button>
 			</form>
 			<form role="form" action="/board/remove" method="post">
 				<input type="hidden" name="page" value="${pageObj.page}"> 
 				<input type="hidden" name="bno" value="${pageObj.bno}">
+				<input type="hidden" name="display" id="display" value="${pageObj.display}">
 				<button type="sumbit" class="btn btn-danger">Remove</button>
 			</form>
 		</div>

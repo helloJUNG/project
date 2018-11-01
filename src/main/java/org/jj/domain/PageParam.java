@@ -23,7 +23,7 @@ public class PageParam {
 
 		this.page = 1;
 		this.display = 10;
-		this.per = (double)(this.display);
+		this.per = 10.0;
 	}
 
 	public void setTotal(int total) {
@@ -62,7 +62,9 @@ public class PageParam {
 	public String getLink(String path) {
 
 		return UriComponentsBuilder.fromPath(path)
-				.queryParam("bno", this.bno).queryParam("page", this.page).toUriString();
+				.queryParam("bno", this.bno).queryParam("page", this.page)
+				.queryParam("type", this.type).queryParam("keyword",this.keyword).queryParam("display", this.display)
+				.toUriString();
 	}
 	
 	public void setType(String type) {
