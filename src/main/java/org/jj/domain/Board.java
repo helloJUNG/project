@@ -1,6 +1,7 @@
 package org.jj.domain;
 
 import java.util.Date;
+import java.util.List;
 
 import org.springframework.format.annotation.DateTimeFormat;
 
@@ -14,5 +15,7 @@ public class Board {
 	@DateTimeFormat(pattern="yyyy-MM-dd")
 	private Date updatedate, regdate;
 	private String del;
+	
+	private List<BoardAttachVO> attachList;
 	
 }

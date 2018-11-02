@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
+import java.net.URLDecoder;
 import java.net.URLEncoder;
 import java.nio.file.Files;
 import java.text.SimpleDateFormat;
@@ -98,10 +99,11 @@ public class UploadController {
 			
 			uploadFileName = uuid.toString()+"_"+uploadFileName;
 			
-			//File saveFile = new File(uploadFolder,uploadFileName);
-			File saveFile = new File(uploadPath,uploadFileName);
 			
 			try {
+				//File saveFile = new File(uploadFolder,uploadFileName);
+				File saveFile = new File(uploadPath,uploadFileName);
+				
 				multipartFile.transferTo(saveFile);
 				
 				attachDTO.setUuid(uuid.toString());
@@ -166,7 +168,10 @@ public class UploadController {
 			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 		}
 		
-		String resourceOriginalName = resource.getFilename();
+		String resourceName = resource.getFilename();
+		
+		//Remove UUID
+		String resourceOriginalName = resourceName.substring(resourceName.indexOf("_") + 1);
 		
 		HttpHeaders headers = new HttpHeaders();
 		
@@ -190,8 +195,7 @@ public class UploadController {
 		
 		log.info("downloadName: " + downloadName);
 		
-		
-			headers.add("Content-Disposition", "attachment;filename=" + new String(resourceName.getBytes("UTF-8")));
+			headers.add("Content-Disposition", "attachment;filename=" + downloadName);
 		} catch (UnsupportedEncodingException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -199,5 +203,37 @@ public class UploadController {
 		
 		return new ResponseEntity<Resource>(resource,headers,HttpStatus.OK);
 	}
+	
+	@PostMapping("/deleteFile")
+	@ResponseBody
+	public ResponseEntity<String> deleteFile(String fileName, String type){
+		
+		log.info("deleteFile: " + fileName);
+		File file;
+		
+		try {
+			file = new File("c:\\upload\\"+URLDecoder.decode(fileName, "UTF-8"));
+			file.delete();
+			
+			if(type.equals("image")) {
+				
+				String largeFileName = file.getAbsolutePath().replace("s_", "");
+				
+				log.info("largeFileName: " + largeFileName);
+				
+				file = new File(largeFileName);
+				
+				file.delete();
+			}
+			
+		} catch (UnsupportedEncodingException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+				
+		}
+		return new ResponseEntity<String>("deleted",HttpStatus.OK);
+	}
+	
 
 }

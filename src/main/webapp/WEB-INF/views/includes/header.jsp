@@ -26,7 +26,7 @@
     <link rel="stylesheet" href="/resources/css/tooplate.css">
 </head>
 
-<body class="bg02">
+<body class="backboard">
     <div class="container">
         <div class="row">
             <div class="col-12">
