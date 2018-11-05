@@ -5,11 +5,10 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
-</head>
-<body>
 
 <style>
-	.uploadResult{
+
+.uploadResult{
 		width:100%;
 		background-color: gray;
 	}
@@ -55,6 +54,12 @@
 		width: 600px;
 	}
 </style>
+
+</head>
+<body>
+
+
+
 <div class='bigPictureWrapper'>
 	<div class='bigPicture'></div>
 </div>
@@ -63,7 +68,11 @@
 <div class="uploadDiv">
 	<input type ="file" name="uploadFile" multiple>
 </div>
-
+<div class="uploadResult">
+	<ul>
+	
+	</ul>
+</div>
 
 
 
@@ -72,30 +81,30 @@
 <script
   src="https://code.jquery.com/jquery-3.3.1.min.js"
   integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
-  crossorigin="anonymous">
-</script>
+  crossorigin="anonymous"></script>
 <script>
 	
-	function showImage(fileCallPath){
-		
-		$(".bigPictureWrapper").css("display","flex").show();
-		$(".bigPicture")
-		.html("<img src='/display?fileName="+encodeURI(fileCallPath)+"'>")
-		.animate({width:'100%', height:'100%'},1000);
-		console.log("fileCallPath");
+function showImage(fileCallPath){
 	
-	}
-	
-	$(".bigPictureWrapper").on("click",function(e){
-		
-		$(".bigPicture").animate({width:'0%',height:'0%'},1000);
-		setTimeout(function(){
-			$(".bigPictureWrapper").hide();
-		}, 1000);
-		});
+	$(".bigPictureWrapper").css("display","flex").show();
+	$(".bigPicture")
+	.html("<img src='/display?fileName="+encodeURI(fileCallPath)+"'>")
+	.animate({width:'100%', height:'100%'},1000);
+	console.log("fileCallPath");
 
-	$(document).ready(function(){
-						
+}
+
+$(".bigPictureWrapper").on("click",function(e){
+	
+	$(".bigPicture").animate({width:'0%',height:'0%'},1000);
+	setTimeout(function(){
+		$(".bigPictureWrapper").hide();
+	}, 1000);
+	});
+
+$(document).ready(function(){
+	
+				
 		var cloneObj = $(".uploadDiv").clone();
 		
 		//첨부파일 목록
@@ -110,7 +119,7 @@
 						if(!obj.image){
 							var fileCallPath = encodeURIComponent(obj.uploadPath+"/"+obj.uuid+"_"+obj.fileName);
 							
-							var fileLink = fileCallPath.replace(new(/\\/g),"/")
+							var fileLink = fileCallPath.replace(new RegExp(/\\/g),"/");
 							str += "<li><div><a href='/download?fileName="+fileCallPath+"'>"
 									+"<img src='/resources/img/clip.png'>"+obj.fileName+"</a>"
 									+"<span data-file=\'"+fileCallPath+"\' data-type='file'>X</span>"+"</div></li>"	

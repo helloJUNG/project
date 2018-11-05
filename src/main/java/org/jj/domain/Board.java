@@ -1,3 +1,4 @@
+
 package org.jj.domain;
 
 import java.util.Date;
