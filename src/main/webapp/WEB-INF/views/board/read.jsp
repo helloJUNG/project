@@ -3,10 +3,63 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@include file="../includes/header.jsp"%>
 
+<div class="bigPictureWrapper">
+	<div class="bigPicture">
+	</div>
+</div>
+
 <style>
 form {
 	width: 100%;
 }
+
+.uploadResult{
+		width:100%;
+		background-color: gray;
+	}
+	
+	.uploadResult ul{
+		display:flex;
+		flex-flow: row;
+		justify-content: center;
+		align-items: center;
+	}
+	.uploadResult ul li{
+		list-style: none;
+		padding: 10px;
+		align-content: center;
+		text-align: center;
+	}
+	.uploadResult ul li img{
+		width: 100px;
+		heigh: 100px;
+	}
+	.uploadResult ul li span{
+		color:white;
+	}
+	.bigPictureWrapper{
+		position: absolute;
+		display: none;
+		justify-content: center;
+		align-items: center;
+		top: 0%;
+		width: 100%;
+		height: 100%;
+		background-color: gray;
+		z-index: 100;
+		background:rgba(255,255,255,0.5);
+	}
+	.bigPicture{
+		position: relative;
+		display: flex;
+		justify-content: center;
+		align-items: center;
+	}
+	.bigPicture img{
+		width: 600px;
+	}
+
+
 </style>
 
 <!-- row -->
@@ -43,6 +96,13 @@ form {
 							rows="3" name="content" required><c:out
 								value="${board.content}" /></textarea>
 					</div>
+					<div class="form-group uploadDiv">
+					<label>FileAttach </label>
+					</div>
+					<div class="uploadResult">
+						<ul>
+						</ul>
+					</div>
 				</form>
 				<form role="form" action="/board/modify" method="get">
 					 <input type="hidden" name="page" value="${pageObj.page}">
@@ -60,6 +120,7 @@ form {
 			</div>
 		</div>
 	</div>
+</div>	
 	<!-- Modal -->
 	<div class="modal fade" id="myModal" tabindex="-1" role="dialog"
 		aria-labelledby="myModalLabel" aria-hidden="true">
@@ -90,7 +151,43 @@ $(document).ready(function(){
 			
 	checkModal(result);
 	history.replaceState({},null,null);
+	
+
+	
+	var bno = '<c:out value="${board.bno}"/>';
+	
+	$.getJSON("/board/getAttachList",{bno:bno}, function(arr){
+		
+		console.log(arr);
+		
+		var str = "";
+		
+		$(arr).each(function(i,attach){
 			
+			if(attach.fileType){
+				
+				var fileCallPath = encodeURIComponent(attach.uploadPath+ "/s_" + attach.uuid + "_" + attach.fileName);
+				
+				str += "<li data-path='"+attach.uploadPath+"' data-uuid='"+attach.uuid+"' data-filename='"+attach.fileName+"' data-type='"+attach.fileType+"'>"
+				str += "<img src='/display?fileName="+fileCallPath+"'>";
+				str += "<div>";
+				str +  "</li>";
+			}else{
+				
+				str += "<li data-path='"+attach.uploadPath+"' data-uuid='"+attach.uuid+"' data-filename='"+attach.fileName+"' data-type='"+attach.fileType+"'><div>"
+				str += "<span>" +attach.fileName+"</span><br/>";
+				str += "<img src='/resources/img/clip.png'></a>";
+				str += "</div>";
+				str +  "</li>";
+			}
+			
+		});
+		
+		$("uploadResult ul").html(str);
+		
+	});// end JSON
+	
+	
 	function checkModal(result){
 				
 		if(result === '' || history.state){

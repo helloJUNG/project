@@ -36,9 +36,12 @@
 </select>
 
 <insert id="insert">
-	<![CDATA[
+	
 	insert into tbl_board(title,content,writer) values(#{title},#{content},#{writer}) 
-	]]>
+	<selectKey resultType="int" keyProperty="bno" order="AFTER">
+	select max(bno) from tbl_board
+	</selectKey>
+	
 </insert>
 
 <update id="delete">

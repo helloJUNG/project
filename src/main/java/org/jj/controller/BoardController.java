@@ -1,10 +1,18 @@
 package org.jj.controller;
 
+
+
+import java.util.List;
+
 import org.jj.domain.Board;
+import org.jj.domain.BoardAttachVO;
 import org.jj.domain.PageParam;
 import org.jj.service.BoardService;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
@@ -13,6 +21,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import lombok.Setter;
@@ -27,6 +36,15 @@ public class BoardController {
 
 	@Setter(onMethod_=@Autowired)
 	private BoardService service;
+	
+	@GetMapping(value="/getAttachList", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+	@ResponseBody
+	public ResponseEntity<List<BoardAttachVO>> getAttachList(int bno){
+		
+		log.info("getAttachList: " + bno);
+		
+		return new ResponseEntity<>(service.getAttachList(bno),HttpStatus.OK);
+	}
 	
 	@PostMapping("/remove")
 	public String remove(RedirectAttributes rttr,PageParam pageParam) {

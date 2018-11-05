@@ -3,6 +3,7 @@ package org.jj.service;
 import java.util.List;
 
 import org.jj.domain.Board;
+import org.jj.domain.BoardAttachVO;
 import org.jj.domain.PageParam;
 
 public interface BoardService {
@@ -18,5 +19,7 @@ public interface BoardService {
 	public int register(Board board);
 	
 	public int getTotal();
+	
+	public List<BoardAttachVO> getAttachList(int bno);
 
 }
