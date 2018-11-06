@@ -2,6 +2,10 @@ package org.jj.controller;
 
 
 
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.List;
 
 import org.jj.domain.Board;
@@ -21,6 +25,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
@@ -37,6 +42,43 @@ public class BoardController {
 	@Setter(onMethod_=@Autowired)
 	private BoardService service;
 	
+	private void deleteFiles(List<BoardAttachVO> attachList) {
+		
+		if(attachList == null || attachList.size() == 0) {
+			return;
+		}
+		
+		log.info("delete attach files....");
+		log.info(attachList);
+		
+		attachList.forEach(attach ->{
+			
+			Path file = Paths.get("C:\\upload\\"+attach.getUploadPath()+"\\"+attach.getUuid()+"_"+attach.getFileName());
+			
+			try {
+				
+				Files.deleteIfExists(file);
+				
+				if(Files.probeContentType(file).startsWith("image")) {
+					
+					Path thumbNail = Paths.get("C:\\upload\\"+attach.getUploadPath()+"\\s_"+attach.getUuid()+"_"+attach.getFileName());
+					
+					Files.delete(thumbNail);
+					
+				}
+				
+			} catch (Exception e) {
+				
+				log.error("delete file error" + e.getMessage());
+				
+				e.printStackTrace();
+			}
+			
+			
+		});// end forEach
+		
+	}
+	
 	@GetMapping(value="/getAttachList", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
 	@ResponseBody
 	public ResponseEntity<List<BoardAttachVO>> getAttachList(int bno){
@@ -47,14 +89,20 @@ public class BoardController {
 	}
 	
 	@PostMapping("/remove")
-	public String remove(RedirectAttributes rttr,PageParam pageParam) {
+	public String remove(@RequestParam("bno") int bno, RedirectAttributes rttr,PageParam pageParam) {
 		log.info("remove--------------------------------------------");
 		log.info(pageParam.getBno());
 		
-		int result = service.remove(pageParam);
+		List<BoardAttachVO> attachList = service.getAttachList(bno);
 		
-		rttr.addFlashAttribute("result", result == 1? "SUCCESS":"FAIL");
+		if(service.remove(pageParam) == 1) {
 		
+			int result = service.remove(pageParam);
+			
+			deleteFiles(attachList);
+			
+			rttr.addFlashAttribute("result", result == 1? "SUCCESS":"FAIL");
+		}
 		return "redirect:/board/list?page=" + pageParam.getPage()+"&display="+pageParam.getDisplay();
 	}
 	
@@ -96,6 +144,8 @@ public class BoardController {
 		
 		
 		int result = service.register(board);
+		
+		log.info(result);
 		
 		rttr.addAttribute("result", result == 1? "SUCCESS":"FAIL");		
 		
