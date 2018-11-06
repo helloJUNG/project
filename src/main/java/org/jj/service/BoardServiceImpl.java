@@ -22,15 +22,19 @@ public class BoardServiceImpl implements BoardService {
 	@Setter(onMethod_=@Autowired)
 	private BoardAttachMapper attachMapper;
 	
+	
 	@Override
 	public List<Board> getList(PageParam pageParam) {
 		// TODO Auto-generated method stub
 		return mapper.getList(pageParam);
 	}
 
+	@Transactional
 	@Override
 	public int remove(PageParam pageParam) {
-		// TODO Auto-generated method stub
+		
+		attachMapper.deleteAll(pageParam.getBno());
+		
 		return mapper.delete(pageParam);
 	}
 
