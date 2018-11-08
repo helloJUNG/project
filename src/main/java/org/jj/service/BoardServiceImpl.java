@@ -12,8 +12,10 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import lombok.Setter;
+import lombok.extern.log4j.Log4j;
 
 @Service
+@Log4j
 public class BoardServiceImpl implements BoardService {
 
 	@Setter(onMethod_=@Autowired)
@@ -38,10 +40,25 @@ public class BoardServiceImpl implements BoardService {
 		return mapper.delete(pageParam);
 	}
 
+	@Transactional
 	@Override
 	public int modify(Board board) {
-		// TODO Auto-generated method stub
-		return mapper.modify(board);
+		
+		log.info("modify... " +  board );
+		
+		attachMapper.deleteAll(board.getBno());
+		
+		int result = mapper.modify(board);
+		
+		if(result == 1 && board.getAttachList().size() > 0) {
+			
+			board.getAttachList().forEach(attach ->{	
+				attach.setBno(board.getBno());
+				attachMapper.insert(attach);
+				
+			});		
+		}
+		return result;
 	}
 
 	@Override
@@ -64,6 +81,11 @@ public class BoardServiceImpl implements BoardService {
 			attachMapper.insert(attach);
 		});
 		
+		log.info("==================================");
+		log.info("==================================");
+		log.info("==================================");
+		log.info("result:"+result);
+	
 		return result;
 	}
 

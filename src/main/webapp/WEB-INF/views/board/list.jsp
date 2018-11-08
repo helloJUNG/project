@@ -167,6 +167,7 @@ $(document).ready(function(){
 	  }); 
 		 
 	var result = '<c:out value="${result}"/>';
+	console.log(result);
 	var msg = $("#myModal");
 					
 	checkModal(result);

@@ -135,7 +135,7 @@ public class BoardController {
 		log.info("===================================");
 		
 		log.info("register:" +board);
-		
+		log.info(board);
 		if(board.getAttachList() != null) {
 			board.getAttachList().forEach(attach-> log.info(attach));
 		}
@@ -147,7 +147,7 @@ public class BoardController {
 		
 		log.info(result);
 		
-		rttr.addAttribute("result", result == 1? "SUCCESS":"FAIL");		
+		rttr.addFlashAttribute("result", result == 1? "SUCCESS":"FAIL");		
 		
 		return "redirect:/board/list";
 	}

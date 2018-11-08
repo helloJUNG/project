@@ -116,17 +116,15 @@ form {
 	$(document).ready(function(e){
 		
 		var formObj = $("form[role='form']");
-		
-		$("button[type='submit']").on("click",function(e){
-			
-			e.preventDefault();
-			
-			console.log("submit clicked");
-			
+		//서브밋 버튼
+		$("button[type='submit']").on("click",function(e){		
+			e.preventDefault();			
+			console.log("submit clicked");		
 			var str="";
 			
-			$(".uploadResult ul li").each(function(i,obj){
-				
+			
+		//이미지 출력
+			$(".uploadResult ul li").each(function(i,obj){		
 				var jobj= $(obj);
 				console.dir(jobj);
 				
@@ -142,6 +140,7 @@ form {
 		var regex = new RegExp("(.*?)\.(exe|sh|zip|alz)$");
 		var maxSize = 5242880;
 		
+		//파일 체크
 		function checkExtension(fileName, fileSize){
 			
 			if(fileSize >= maxSize){
@@ -155,6 +154,8 @@ form {
 			return true;
 		}
 	
+		
+		//업로드 출력
 		 function showUploadResult(uploadResultArr){
 			
 			if(!uploadResultArr || uploadResultArr.length == 0){return; }
@@ -181,7 +182,7 @@ form {
 					
 					var fileLink = fileCallPath.replace(new RegExp(/\\/g),"/");
 					
-					str += "<li"
+					str += "<li ";
 					str += "data-path='"+obj.uploadPath+"' data-uuid='"+obj.uuid+"' data-filename='"+obj.fileName+"' data-type='"+obj.image+"'><div>";
 					str += "<span>"+obj.fileName+"</span>";
 					str += "<button type='button' data-file=\'"+fileCallPath+"\' data-type='file' class='tm-trash-icon-cell'><i class='fas fa-trash-alt tm-trash-icon'></i></button><br>";
@@ -194,6 +195,8 @@ form {
 			uploadUL.append(str);
 		}
 		 
+		
+		//파일 삭제
 		 $('.uploadResult').on("click","button",function(e){
 			console.log("delete file"); 
 			
@@ -218,7 +221,7 @@ form {
 			
 		 });
 		
-			
+			//파일 업로드
 			$("input[type='file']").change(function(e){
 				
 				var formData = new FormData();

@@ -14,6 +14,9 @@
 	<logger name="org.jj.controller">
 		<level value="info" />
 	</logger>
+	<logger name="org.jj.service">
+		<level value="info" />
+	</logger>
 	
 	<!-- 3rdparty Loggers -->
 	<logger name="org.springframework.core">

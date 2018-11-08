@@ -166,6 +166,114 @@ $(document).ready(function(){
 		});//end JSON
 		
 	})();//end function
+	
+	$(".uploadResult").on("click","button",function(e){
+		
+		console.log("delete file");
+		
+		if(confirm("Remove this file?")){
+			
+			var targetLi = $(this).closest("li");
+			targetLi.remove();
+		}
+		
+	   //파일 타입
+		var regex = new RegExp("(.*?)\.(exe|sh|zip|alz)$");
+		var maxSize = 5242880;
+		
+		//파일 체크
+		function checkExtension(fileName, fileSize){
+			
+			if(fileSize >= maxSize){
+				alert("파일 사이즈 초과");
+				return false;
+			}
+			if(regex.test(fileName)){
+				alert("파일을 업로드 할 수 없습니다.");
+				return false;
+			}
+			return true;
+		}
+	
+		
+		//업로드 출력
+		 function showUploadResult(uploadResultArr){
+			
+			if(!uploadResultArr || uploadResultArr.length == 0){return; }
+			
+			var uploadUL = $(".uploadResult ul");
+			
+			var str = "";
+			
+			$(uploadResultArr).each(function(i,obj){
+				
+				if(obj.image){
+					var fileCallPath = encodeURIComponent(obj.uploadPath+"/s_"+obj.uuid+"_"+obj.fileName);
+					
+					str += "<li data-path='"+obj.uploadPath+"'";
+					str += "data-uuid='"+obj.uuid+"' data-filename='"+obj.fileName+"' data-type='"+obj.image+"'><div>"
+					str += "<span>"+obj.fileName+"</span>";
+					str += "<button type='button' data-file=\'"+fileCallPath+"\' data-type='image' class='tm-trash-icon-cell'><i class='fas fa-trash-alt tm-trash-icon'></i></button><br>";
+					str += "<img src='/display?fileName="+fileCallPath+"'>";
+					str += "</div>";
+					str += "</li>";
+				}else{
+					//str += "<li>"+obj.fileName+"</li>"
+					var fileCallPath = encodeURIComponent(obj.uploadPath+"/"+obj.uuid+"_"+obj.fileName);
+					
+					var fileLink = fileCallPath.replace(new RegExp(/\\/g),"/");
+					
+					str += "<li ";
+					str += "data-path='"+obj.uploadPath+"' data-uuid='"+obj.uuid+"' data-filename='"+obj.fileName+"' data-type='"+obj.image+"'><div>";
+					str += "<span>"+obj.fileName+"</span>";
+					str += "<button type='button' data-file=\'"+fileCallPath+"\' data-type='file' class='tm-trash-icon-cell'><i class='fas fa-trash-alt tm-trash-icon'></i></button><br>";
+					str += "<img src='/resources/img/clip.png'></a>";
+					str += "</div>";
+					str += "</li>";
+				}	
+				
+			});
+			uploadUL.append(str);
+		}	
+		
+	});
+	
+	var formObj = $("form");
+	
+		$('button').on("click",function(e){
+			
+			e.preventDefault();
+			
+			var operation = $(this).data("oper");
+			
+			console.log(operation);
+			
+			if(operation === 'remove'){
+				formObj.attr("action","/board/remove")
+				
+			}else if(operation === 'list'){
+				formObj.attr("action","/board/remove")
+				
+			}else if(operation === 'modify'){
+			
+				console.log("submit clicked....")
+				
+				var str = "";
+				
+				$(".uploadResult ul li").each(function(i,obj){		
+					var jobj= $(obj);
+					console.dir(jobj);
+					
+					str +="<input type='hidden' name='attachList["+i+"].fileName' value='"+jobj.data("filename")+"'>";
+					str +="<input type='hidden' name='attachList["+i+"].uuid' value='"+jobj.data("uuid")+"'>";
+					str +="<input type='hidden' name='attachList["+i+"].uploadPath' value='"+jobj.data("path")+"'>";
+					str +="<input type='hidden' name='attachList["+i+"].fileType' value='"+jobj.data("type")+"'>";
+				});
+				formObj.append(str).submit();
+				
+			}
+			formObj.submit();
+		});
 		
 });
 

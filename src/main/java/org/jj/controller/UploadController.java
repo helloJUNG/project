@@ -125,8 +125,9 @@ public class UploadController {
 				e.printStackTrace();
 			}
 			
+			
 		}//end for
-		
+		log.info(list);
 		return new ResponseEntity<>(list,HttpStatus.OK);
 	}
 	
