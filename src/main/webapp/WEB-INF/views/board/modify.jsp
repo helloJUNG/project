@@ -73,7 +73,7 @@ form {
 			</div>
 
 			<div class="row col-xl-12 col-lg-12 col-md-12 col-sm-12">
-				<form role="form" action="/board/modify" method="post">
+				<form id='modifyForm' role="form" action="/board/modify" method="post" >
 					 <input type="hidden" name="bno" value="${board.bno}">
 					<div class="form-group">
 						<label class="col-xl-4 col-lg-4 col-md-4 col-sm-5 col-form-label">
@@ -103,20 +103,20 @@ form {
 						<ul>
 						</ul>
 					</div>
-					<button type="submit" class="btn btn-small btn-primary">Modify</button>
+					<button type="submit" data-oper="modify" class="btn btn-small btn-primary">Modify</button>
 				</form>
 			</div>
-			<form role="form" action="/board/list" method="get">
+			<form id='listForm' role="form" action="/board/list" method="get" >
 				<input type="hidden" name="page" value="${pageObj.page}">
 				<input type="hidden" name="display" id="display" value="${pageObj.display}">
-				<button type="submit" class="btn btn-small btn-primary">List
+				<button type="submit" data-oper="list" class="btn btn-small btn-primary">List
 					Button</button>
 			</form>
-			<form role="form" action="/board/remove" method="post">
+			<form id='removeForm' role="form" action="/board/remove" method="post">
 				<input type="hidden" name="page" value="${pageObj.page}"> 
 				<input type="hidden" name="bno" value="${pageObj.bno}">
 				<input type="hidden" name="display" id="display" value="${pageObj.display}">
-				<button type="sumbit" class="btn btn-danger">Remove</button>
+				<button type="sumbit" data-oper="remove" class="btn btn-danger">Remove</button>
 			</form>
 		</div>
 	</div>
@@ -238,25 +238,27 @@ $(document).ready(function(){
 		
 	});
 	
-	var formObj = $("form");
 	
+		//
 		$('button').on("click",function(e){
-			
+			var formObj ;
 			e.preventDefault();
 			
 			var operation = $(this).data("oper");
 			
 			console.log(operation);
-			
+	
 			if(operation === 'remove'){
-				formObj.attr("action","/board/remove")
+				formObj=$("#removeForm");
+				console.log("submit remove....")
 				
 			}else if(operation === 'list'){
-				formObj.attr("action","/board/remove")
+				formObj=$("#listForm");
+				console.log("submit list....")
 				
 			}else if(operation === 'modify'){
-			
-				console.log("submit clicked....")
+				formObj=$("#modifyForm");
+				console.log("submit modify....")
 				
 				var str = "";
 				

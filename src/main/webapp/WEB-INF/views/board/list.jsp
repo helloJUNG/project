@@ -96,6 +96,8 @@
 					<c:if test="${pageObj.next}">
 						<li class="page-item">
 						  <a class="page-link" href="${pageObj.end+1}">Next</a>
+						  
+						  
 						</li>
 					</c:if>
 				</ul>
