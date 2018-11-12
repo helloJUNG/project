@@ -189,15 +189,23 @@ $(document).ready(function(){
 		}		
 	}
 	
+	
+	
 	$("#searchBtn").on("click",function(e){
 		
 		var searchTypeValue =$("select[name='type'] option:selected").val();
 		var searchKeyword = $("input[name='keyword']").val();
+		
 		console.log(searchKeyword);
 		if(searchKeyword.trim().length == 0){
 			
 			alert("검색어없음");
 			
+			return;
+		}
+		if(searchTypeValue === '--'){
+			
+			alert("검색조건을 선택하세요.");
 			return;
 		}
 		

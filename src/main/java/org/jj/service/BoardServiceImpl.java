@@ -45,10 +45,13 @@ public class BoardServiceImpl implements BoardService {
 	public int modify(Board board) {
 		
 		log.info("modify... " +  board );
-		//이 부분에서 아무것도없는데 삭제하려고 해서 그런거
+		
+		attachMapper.deleteAll(board.getBno());
+		
 		if(board.getAttachList()==null) {
 			return  mapper.modify(board);
 		}
+						
 		int result = mapper.modify(board);
 		
 		if(result == 1 && board.getAttachList().size() > 0) {

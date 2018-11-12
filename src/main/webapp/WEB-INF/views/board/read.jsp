@@ -170,13 +170,14 @@ $(document).ready(function(){
 				
 				str += "<li data-path='"+attach.uploadPath+"' data-uuid='"+attach.uuid+"' data-filename='"+attach.fileName+"' data-type='"+attach.fileType+"'>"
 				str += "<img src='/display?fileName="+fileCallPath+"'>";
+				str += "<p><a href='#'>"+attach.fileName+"</a></p>";
 				str += "<div>";
 				str += "</li>";
 			}else{
 				
 				str += "<li data-path='"+attach.uploadPath+"' data-uuid='"+attach.uuid+"' data-filename='"+attach.fileName+"' data-type='"+attach.fileType+"'><div>"
-				str += "<span>" +attach.fileName+"</span><br/>";
 				str += "<img src='/resources/img/clip.png'></a>";
+				str += "<p><a href='#'>"+attach.fileName+"</a></p>";
 				str += "</div>";
 				str += "</li>";
 			}
@@ -199,9 +200,22 @@ $(document).ready(function(){
 			
 			showImage(path.replace(new RegExp(/\\/g),"/"));
 			
-		}else{
-			self.location = "/download?fileName="+path
 		}
+	});
+	
+$(".uploadResult").on("click","p a",function(e){
+		e.preventDefault();
+		e.stopPropagation();
+		console.log("download..");
+		
+		var liObj = $(this).closest('li');
+		var fileName=liObj.data("filename").replace(".","_");
+		
+		var path = encodeURIComponent(liObj.data("path")+"/"+liObj.data("uuid")+"_"+fileName);
+		console.log(path);
+		var link ="/download?fileName="+path;
+		
+		self.location = link;
 		
 	});
 	
