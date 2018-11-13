@@ -74,7 +74,6 @@ form {
 
 			<div class="row col-xl-12 col-lg-12 col-md-12 col-sm-12">
 				<form id='modifyForm' role="form" action="/board/modify" method="post" >
-					 <input type="hidden" name="bno" value="${board.bno}">
 					<div class="form-group">
 						<label class="col-xl-4 col-lg-4 col-md-4 col-sm-5 col-form-label">
 							Title </label> <input id="title" name="title" type="text" required
@@ -103,30 +102,31 @@ form {
 						<ul>
 						</ul>
 					</div>
-					<button type="submit" data-oper="modify" class="btn btn-small btn-primary">Modify</button>
+					<input type="hidden" name="bno" value="${board.bno}">
+					<input type="hidden" name="page" value="${pageObj.page}">
+					<input type="hidden" name="display" id="display" value="${pageObj.display}">
+					<button id='modifyBtn'type="submit" data-oper="modify" class="btn btn-small btn-primary">Modify</button>
+					<button id='listBtn'type="submit" data-oper="list" class="btn btn-small btn-primary">List</button>
+					<button id='removeBtn' type="submit" data-oper="remove" class="btn btn-danger">Remove</button>
 				</form>
 			</div>
-			<form id='listForm' role="form" action="/board/list" method="get" >
-				<input type="hidden" name="page" value="${pageObj.page}">
-				<input type="hidden" name="display" id="display" value="${pageObj.display}">
-				<button type="submit" data-oper="list" class="btn btn-small btn-primary">List
-					Button</button>
-			</form>
-			<form id='removeForm' role="form" action="/board/remove" method="post">
-				<input type="hidden" name="page" value="${pageObj.page}"> 
-				<input type="hidden" name="bno" value="${pageObj.bno}">
-				<input type="hidden" name="display" id="display" value="${pageObj.display}">
-				<button type="submit" data-oper="remove" class="btn btn-danger">Remove</button>
-			</form>
 		</div>
 	</div>
 </div>
+
+<form id="actionForm">
+	<input type="hidden" name="bno" value="${board.bno}">
+	<input type="hidden" name="page" value="${pageObj.page}">
+	<input type="hidden" name="display" id="display" value="${pageObj.display}">
+</form>	
+
 <%@include file="../includes/footer.jsp"%>
 
 <script>
 
 $(document).ready(function(){
 	
+	var actionForm = $("#actionForm");
 	  //파일 타입
 	var regex = new RegExp("(.*?)\.(exe|sh|zip|alz)$");
 	var maxSize = 5242880;
@@ -146,8 +146,6 @@ $(document).ready(function(){
 	}
 	
 
-
-	
 	(function(){
 		
 		var bno = '<c:out value="${board.bno}"/>';
@@ -254,12 +252,14 @@ $(document).ready(function(){
 			console.log(operation);
 	
 			if(operation === 'remove'){
-				formObj=$("#removeForm");
+				formObj=$("#removeBtn");
 				console.log("submit remove....")
+				actionForm.attr("action","/board/remove").attr("method","post").submit();	
 				
 			}else if(operation === 'list'){
-				formObj=$("#listForm");
+				formObj=$("#listBtn");
 				console.log("submit list....")
+				actionForm.attr("action","/board/list").attr("method","get").submit();		
 				
 			}else if(operation === 'modify'){
 				formObj=$("#modifyForm");

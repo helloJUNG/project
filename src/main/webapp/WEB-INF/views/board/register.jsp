@@ -69,15 +69,15 @@ form {
 
 					<div class="form-group">
 						<label class="col-xl-4 col-lg-4 col-md-4 col-sm-5 col-form-label">
-							Title </label> <input id="title" name="title" type="text" required
+							Title </label> <input id="title" name="title" type="text" 
 							class="form-control validate col-xl-12 col-lg-12 col-md-12 col-sm-12"
-							data-large-mode="true">
+							data-large-mode="true" required>
 					</div>
 					<div class="form-group">
 						<label class="col-xl-4 col-lg-4 col-md-4 col-sm-5 col-form-label">
-							Writer </label> <input id="writer" name="writer" type="text" required
+							Writer </label> <input id="writer" name="writer" type="text" 
 							class="form-control validate col-xl-12 col-lg-12 col-md-12 col-sm-12"
-							data-large-mode="true">
+							data-large-mode="true" required>
 					</div>
 					<div class="form-group">
 						<label class="col-xl-4 col-lg-4 col-md-4 col-sm-5 mb-2">Content</label>

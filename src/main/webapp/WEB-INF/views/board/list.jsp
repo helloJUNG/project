@@ -3,7 +3,14 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
 <%@include file="../includes/header.jsp"%>
-
+<style>
+.li data-page{
+	background-color: gray;
+}
+#asd{
+	float:right;
+}
+</style>
 <!-- row -->
 <div class="row tm-content-row tm-mt-big">
 
@@ -23,7 +30,7 @@
 					</div>
 				</div>
 
-				<div class="col-md-4 col-sm-12 text-right">
+				<div class="col-md-4 col-sm-12 text-right" id='asd'>
 					<a href="/board/register" class="btn btn-danger">Register</a>
 				</div>
 			</div>
@@ -79,7 +86,7 @@
 					<button class="btn btn-danger" id="searchBtn">Search</button>
 				</div>	
 	
-		 <div class="tm-table-mt tm-table-actions-row">
+		 <div class="tm-table-mt tm-table-actions-row justify-content-center">
 				<ul class="pagination tm-pagination">
 					<c:if test="${pageObj.prev}">
 						<li class="page-item active">
@@ -156,7 +163,7 @@ $(document).ready(function(){
 	
 
 
-	$('.pagination tm-pagination[data-page ='+pageNum+']').addClass("active");
+	$('.pagination tm-pagination li[data-page ='+pageNum+']').addClass("active");
 		
 	$('.page-link').on("click",function(e){
 			

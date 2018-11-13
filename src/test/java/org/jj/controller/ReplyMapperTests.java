@@ -2,6 +2,7 @@ package org.jj.controller;
 
 import java.util.stream.IntStream;
 
+import org.jj.domain.PageParam;
 import org.jj.domain.ReplyVO;
 import org.jj.mapper.ReplyMapper;
 import org.junit.Test;
@@ -24,6 +25,59 @@ public class ReplyMapperTests {
 	private ReplyMapper mapper;
 	
 	@Test
+	public void getList() {
+		
+		PageParam pageParam = new PageParam();
+		pageParam.setBno(150);
+		
+		log.info(mapper.getList(pageParam));
+		
+	}
+	
+	@Test
+	public void testCount() {
+		
+		PageParam pageParam = new PageParam();
+		pageParam.setBno(371);
+		
+		log.info(mapper.count(pageParam));
+		
+	}
+	
+	@Test
+	public void testUpdate() {
+		
+		ReplyVO vo = new ReplyVO();
+		vo.setRno(1);
+		vo.setReply("ì—…ë°ì´íŠ¸ë«ë‹¤123123");
+		mapper.update(vo);
+		log.info(mapper.update(vo));
+	}
+	
+	@Test
+	public void testDelete() {
+		
+		PageParam pageParam = new PageParam();
+		pageParam.setRno(17);
+		
+		mapper.delete(pageParam);
+		
+	}
+	
+	
+	@Test
+	public void testRead() {
+		
+		PageParam pageParam = new PageParam();
+		
+		pageParam.setRno(17);
+		
+		ReplyVO vo = mapper.read(pageParam);
+		
+		log.info(vo);
+	}
+	
+	@Test
 	public void testMapper() {
 		log.info(mapper);
 	}
@@ -36,7 +90,7 @@ public class ReplyMapperTests {
 			ReplyVO vo = new ReplyVO();
 			
 			vo.setBno(bnoArr[i % 5]);
-			vo.setReply("´ñ±ÛÅ×½ºÆ®" + i);
+			vo.setReply("test" + i);
 			vo.setReplyer("replyer"+i);
 			
 			mapper.insert(vo);

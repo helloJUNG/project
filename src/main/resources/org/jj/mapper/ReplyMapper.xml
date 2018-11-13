@@ -9,4 +9,27 @@
 	values(#{bno},#{reply},#{replyer})
 </insert>
 
+<select id="read" resultType="org.jj.domain.ReplyVO">
+	select * from tbl_reply where rno = #{rno}
+</select>
+
+<update id="delete">
+	update tbl_reply set del='Y' where rno = #{rno}
+
+</update>
+
+<update id="update">
+	update tbl_reply set reply = #{reply}, updatedate = now() where rno = #{rno}
+</update>
+
+<select id="count" resultType="int">
+		select count(*)
+		from tbl_reply where bno = #{bno} and  del='N'	 
+</select>
+
+<select id="getList" resultType="org.jj.domain.ReplyVO">
+	select * from tbl_reply where bno = #{bno} and bno > 0 order by rno asc
+	limit #{skip},10
+</select>
+
 </mapper>

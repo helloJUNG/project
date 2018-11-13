@@ -24,8 +24,8 @@
 	select * from tbl_board
 	where 1=1
 	<include refid="search"></include>
-	and del='N'
-	order by bno desc
+	and del='N' and bno > 0
+	order by bno desc 
 	limit #{skip},#{display}
 </select>
 
@@ -53,7 +53,7 @@
 <update id="modify">
 	<![CDATA[
 	update tbl_board set title = #{title}, content = #{content}, writer = 
-	#{writer} where bno = #{bno}
+	#{writer}, updatedate = now() where bno = #{bno}
  	]]>
 </update>
 

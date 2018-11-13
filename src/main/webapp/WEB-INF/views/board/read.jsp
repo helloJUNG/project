@@ -74,7 +74,7 @@ form {
 
 
 			<div class="row col-xl-12 col-lg-12 col-md-12 col-sm-12">
-				<form>
+				<form>	
 					<div class="form-group">
 						<label class="col-xl-4 col-lg-4 col-md-4 col-sm-5 col-form-label">
 							Title </label> <input id="title" name="title" type="text"
@@ -103,20 +103,14 @@ form {
 						<ul>
 						</ul>
 					</div>
-				</form>
-				<form role="form" action="/board/modify" method="get">
+				</form>	
+				<form role="form" action="/board/modify" method="get">	
 					 <input type="hidden" name="page" value="${pageObj.page}">
 					 <input type="hidden" name="bno" value="${board.bno}">
 					 <input type="hidden" name="display" id="display" value="${pageObj.display}">
 					<button type="submit" class="btn btn-small btn-primary">Modify</button>
+					<button id ="listBtn" type="submit" class="btn btn-small btn-primary">List</button>
 				</form>
-				<form role="form" action="/board/list" method="get">
-					<input type="hidden" name="page" value="${pageObj.page}">
-					<input type="hidden" name="display" id="display" value="${pageObj.display}">
-					<button type="submit" class="btn btn-small btn-primary">List
-						Button</button>
-				</form>
-
 			</div>
 		</div>
 	</div>
@@ -141,10 +135,41 @@ form {
 		<!-- /.modal-dialog -->
 	</div>
 	<!-- /.modal -->
+<form id="actionForm">
+	<input type="hidden" name="page" value="${pageObj.page}">
+	<input type="hidden" name="display" id="display" value="${pageObj.display}">
+</form>		
 	<%@include file="../includes/footer.jsp"%>
+	
+<script type="text/javascript" src="/resources/js/reply.js"></script>	
+
+<script>
+//read.js
+$(document).ready(function(){
+
+	console.log(replyService);
+	
+	console.log("===============");
+	console.log("JS TEST");
+	
+	var bnoValue = '<c:out value="${board.bno}"/>';
+	
+	//replyService add test
+	
+	replyService.add(
+		{reply:"JS TEST", replyer:"zzigguTEST", bno:bnoValue},
+		function(result){
+			alert("RESULT: " + result);
+		}
+	);
+	
+});
+</script>
+
 <script>
 $(document).ready(function(){
-		 
+			 
+	var actionForm = $("#actionForm");
 
 	var result = '<c:out value="${result}"/>';
 	var msg = $("#myModal");
@@ -152,9 +177,12 @@ $(document).ready(function(){
 	checkModal(result);
 	history.replaceState({},null,null);
 	
-
-	
 	var bno = '<c:out value="${board.bno}"/>';
+	
+	$("#listBtn").on("click",function(e){
+		e.preventDefault();
+		actionForm.attr("action","/board/list").attr("method","get").submit();
+	});
 	
 	$.getJSON("/board/getAttachList",{bno:bno}, function(arr){
 		
