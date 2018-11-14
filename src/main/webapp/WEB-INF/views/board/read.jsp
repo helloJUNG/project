@@ -15,7 +15,7 @@ form {
 
 .uploadResult{
 		width:100%;
-		background-color: gray;
+		background-image: url("../resources/img/white.png");
 	}
 	
 	.uploadResult ul{
@@ -151,7 +151,7 @@ form {
 						aria-hidden="true">&times;</button>
 					<h4 class="modal-title" id="myModalLabel"></h4>
 				</div>
-				<div class="modal-body"></div>
+				<div class="modal-body" id="mModal"></div>
 				<div class="modal-footer">
 					<button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
 				</div>
@@ -432,7 +432,7 @@ $(".uploadResult").on("click","p a",function(e){
 		}
 				
 		if (result === 'SUCCESS') {
-			$(".modal-body").html("작업성공!");
+			$("#mModal").html("작업성공!");
 			msg.modal('show');
 				
 		}

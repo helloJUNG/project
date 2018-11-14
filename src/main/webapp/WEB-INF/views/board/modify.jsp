@@ -15,7 +15,7 @@ form {
 
 .uploadResult{
 		width:100%;
-		background-color: gray;
+		background-image: url("../resources/img/white.png");
 	}
 	
 	.uploadResult ul{

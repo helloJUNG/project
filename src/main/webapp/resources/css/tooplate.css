@@ -248,15 +248,15 @@ label {
 }
 
 .btn-yj {
-  color: black;
-  background-color: rgba(214, 233, 252, 0.27);
-  border-color: #d6e9fc;
+  color: #44a2ff;
+  background-color: rgba(68,162,255, 0.27);
+  border-color: #44a2ff;
 }
 
 .btn-yj:hover {
-  color: #d6e9fc;
-  background-color: rgba(214, 233, 252, 0.27);
-  border-color: #d6e9fc;
+  color: #44a2ff;
+  background-color: rgba(68,162,255, 0.27);
+  border-color: #44a2ff;
 }
 
 .custom-file-input {
