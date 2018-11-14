@@ -72,7 +72,7 @@ form {
 				</div>
 			</div>
 
-
+			<!-- Read -->
 			<div class="row col-xl-12 col-lg-12 col-md-12 col-sm-12">
 				<form>	
 					<div class="form-group">
@@ -97,7 +97,7 @@ form {
 								value="${board.content}" /></textarea>
 					</div>
 					<div class="form-group uploadDiv">
-					<label>FileAttach </label>
+					 <h2 class="tm-block-title d-inline-block">FileAttach</h2>
 					</div>
 					<div class="uploadResult">
 						<ul>
@@ -112,9 +112,35 @@ form {
 					<button id ="listBtn" type="submit" class="btn btn-small btn-primary">List</button>
 				</form>
 			</div>
+			<!--end Read -->
 		</div>
 	</div>
+	
+	<!-- Reply -->	
+	<div class="col-xl-12 col-lg-12 col-md-12 col-sm-12">
+                    <div class="bg-white tm-block h-100">
+                        <div class="row">
+                            <div class="col-8">
+                                <h2 class="tm-block-title d-inline-block">Reply List</h2>
+
+                            </div>
+                            <div class="col-4 text-right">
+                                <button class="btn-yj" id="addReplyBtn">add reply</button>
+                            </div>
+                        </div>
+                        <ul id="chat" class="tm-list-group tm-list-group-alternate-color tm-list-group-pad-big col-xl-12 col-lg-12 col-md-12 col-sm-12">
+                            <li>
+                               <div class="header">
+                               		
+                               </div>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+	<!--end Reply -->
+		        
 </div>	
+
 	<!-- Modal -->
 	<div class="modal fade" id="myModal" tabindex="-1" role="dialog"
 		aria-labelledby="myModalLabel" aria-hidden="true">
@@ -135,50 +161,183 @@ form {
 		<!-- /.modal-dialog -->
 	</div>
 	<!-- /.modal -->
+	
+	<!-- ReplyModal -->
+	<div class="modal fade" id="replyModal" tabindex="-1" role="dialog"
+		aria-labelledby="myModalLabel" aria-hidden="true">
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal"
+						aria-hidden="true">&times;</button>
+					<h4 class="modal-title" id="myModalLabel">ReplyModal</h4>
+				</div>
+				<div class="modal-body">
+					<div class="form-group">
+						<label>Reply</label>
+						<input class="form-control" name="reply" value="New Reply!!!">
+					</div>
+					<div class="form-group">
+						<label>Replyer</label>
+						<input class="form-control" name="replyer" value="replyer">
+					</div>
+					<div class="form-group">
+						<label>Reply Date</label>
+						<input class="form-control" name="replydate" value="">
+					</div>
+				</div>
+				<div class="modal-footer">
+					<button id="modalModBtn" type="button" class="btn btn-danger">Modify</button>
+					<button id="modalRemoveBtn" type="button" class="btn btn-danger">Remove</button>
+					<button id="modalRegisterBtn" type="button" class="btn btn-danger">Register</button>
+					<button id="modalCloseBtn" type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+				</div>
+			</div>
+			<!-- /.modal-content -->
+		</div>
+		<!-- /.modal-dialog -->
+	</div>
+	<!-- /.Replymodal -->
+	
 <form id="actionForm">
 	<input type="hidden" name="page" value="${pageObj.page}">
 	<input type="hidden" name="display" id="display" value="${pageObj.display}">
 </form>		
 	<%@include file="../includes/footer.jsp"%>
 	
-<script type="text/javascript" src="/resources/js/reply.js">
+<script type="text/javascript" src="/resources/js/reply.js"></script>
 
-
+<script>
 //read.js
 $(document).ready(function(){
 
-	console.log(replyService);
-	
-	console.log("===============");
-	console.log("JS TEST");
-	
 	var bnoValue = '<c:out value="${board.bno}"/>';
-	
-	//replyService add test
-	
-	replyService.add(
-		{reply:"JS TEST", replyer:"zzigguTEST", bno:bnoValue},
-		function(result){
-			alert("RESULT: " + result);
-		}
-	);
-	
-});
-</script>
-
-<script>
-$(document).ready(function(){
-			 
+	var replyUL = $("#chat");
 	var actionForm = $("#actionForm");
-
 	var result = '<c:out value="${result}"/>';
 	var msg = $("#myModal");
-			
-	checkModal(result);
-	history.replaceState({},null,null);
-	
 	var bno = '<c:out value="${board.bno}"/>';
 	
+	var modal =$("#replyModal");
+	var modalInputReply = modal.find("input[name='reply']");
+	var modalInputReplyer = modal.find("input[name='replyer']");
+	var modalInputReplyDate = modal.find("input[name='replydate']");
+	
+	var modalModBtn = $("#modalModBtn");
+	var modalRemoveBtn = $("#modalRemoveBtn");
+	var modalRegisterBtn = $("#modalRegisterBtn");
+	
+	
+	
+	
+	//댓글 추가
+	$("#addReplyBtn").on("click",function(e){
+		
+		modal.find("input").val("");
+		modalInputReplyDate.closest("div").hide();
+		modal.find("button[id != 'modalCloseBtn']").hide();
+		
+		modalRegisterBtn.show();
+		
+		$("#replyModal").modal("show");
+		
+	});
+	
+	//모달 댓글 등록
+	modalRegisterBtn.on("click",function(e){
+		
+		var reply ={
+				reply:modalInputReply.val(),
+				replyer:modalInputReplyer.val(),
+				bno:bnoValue
+		};
+		replyService.add(reply, function(result){
+			
+			alert(result);
+			
+			modal.find("input").val("");
+			modal.modal("hide");
+			
+			showList(1);
+		});
+		
+	});//end
+	
+	//댓글조회
+	$("#chat").on("click","li",function(e){
+		
+		var rno = $(this).data("rno");
+		
+		replyService.get(rno, function(reply){
+			
+			modalInputReply.val(reply.reply);
+			modalInputReplyer.val(reply.replyer).attr("readonly","readonly");
+			modalInputReplyDate.val(replyService.displayTime(reply.replydate)).attr("readonly","readonly");
+			modal.data("rno",reply.rno);
+			
+			modal.find("button[id != 'modalCloseBtn']").hide();
+			modalModBtn.show();
+			modalRemoveBtn.show();
+			
+			$("#replyModal").modal("show");
+			
+		});
+	});//end
+	
+	//replyModify
+	modalModBtn.on("click",function(e){
+		
+		var reply = {
+				rno:modal.data("rno"),
+				reply:modalInputReply.val()
+		};
+		replyService.update(reply, function(result){
+			
+			alert(result);
+			modal.modal("hide");
+			showList(1);
+		});
+		
+	});//end
+	
+	//remove
+	modalRemoveBtn.on("click",function(e){
+		
+		var rno = modal.data("rno");
+		
+		replyService.remove(rno, function(result){
+			
+			alert(result);
+			modal.modal("hide");
+			showList(1);
+		});
+		
+	});//end
+	
+	
+	function showList(page){
+		
+		replyService.getList({bno:bnoValue, page:page || 1},function(list){
+			
+			var str ="";
+			
+			if(list == null || list.length == 0){
+				replyUL.html("");
+				
+				return;
+			}
+			for(var i =0, len = list.length || 0; i < len; i++){
+				
+				str +="<li class='left clearfix' data-rno='"+list[i].rno+"'>";
+				str +="<div><div class='header'><strong class='primary-font'>"+list[i].replyer+"</strong>";
+				str +="<small class='pull-right text-muted'>"+replyService.displayTime(list[i].replydate)+"</small></div>";
+				str +="<p>"+list[i].reply+"</p></div></li>";
+			}
+			replyUL.html(str);
+		});//end function
+	}//end showList
+	
+			
 	$("#listBtn").on("click",function(e){
 		e.preventDefault();
 		actionForm.attr("action","/board/list").attr("method","get").submit();
@@ -278,6 +437,10 @@ $(".uploadResult").on("click","p a",function(e){
 				
 		}
 	}
+	
+	showList(1);
+	checkModal(result);
+	history.replaceState({},null,null);
 		 
 });
 </script>

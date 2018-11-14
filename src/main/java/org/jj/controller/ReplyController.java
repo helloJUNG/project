@@ -48,18 +48,18 @@ public class ReplyController {
 				produces = {MediaType.APPLICATION_XML_VALUE, MediaType.APPLICATION_JSON_UTF8_VALUE})
 	public ResponseEntity<List<ReplyVO>> getList(@PathVariable("page")int page,@PathVariable("bno")int bno){
 		
-		log.info("get list.....");
+		log.info("get reply list.....");
 		
 		PageParam pageParam = new PageParam();
 		pageParam.setPage(page);
 		pageParam.setBno(bno);
 		pageParam.setTotal(service.count(pageParam));
-		
+		log.info(service.getList(pageParam));
 		
 		return new ResponseEntity<>(service.getList(pageParam),HttpStatus.OK);
 	}
 	
-	//리드
+	//Get
 	@GetMapping(value="/{rno}",
 				produces = {MediaType.APPLICATION_XML_VALUE, MediaType.APPLICATION_JSON_UTF8_VALUE})
 	public ResponseEntity<ReplyVO> get(@PathVariable("rno")int rno){
@@ -73,7 +73,8 @@ public class ReplyController {
 	}
 	
 	//delete
-	@DeleteMapping(value="/{rno}", produces = {MediaType.TEXT_PLAIN_VALUE})
+	@RequestMapping(method = {RequestMethod.PUT, RequestMethod.PATCH}, value="/delete/{rno}",
+					consumes="application/json", produces = {MediaType.TEXT_PLAIN_VALUE})
 	public ResponseEntity<String> remove(@PathVariable("rno")int rno){
 		
 		log.info("remove: " + rno);

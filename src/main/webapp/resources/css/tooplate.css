@@ -160,7 +160,7 @@ ol {
 }
 
 .tm-list-group {
-  counter-reset: myOrderedListItemsCounter;
+  
   padding-left: 0;
 }
 
@@ -185,8 +185,7 @@ ol {
 }
 
 .tm-list-group > li:before {
-  counter-increment: myOrderedListItemsCounter;
-  content: counter(myOrderedListItemsCounter) ".";
+ 
   margin-right: 0.5em;
 }
 
@@ -246,6 +245,18 @@ label {
   color: #9f1321;
   background-color: rgba(159, 19, 32, 0.27);
   border-color: #9f1321;
+}
+
+.btn-yj {
+  color: black;
+  background-color: rgba(214, 233, 252, 0.27);
+  border-color: #d6e9fc;
+}
+
+.btn-yj:hover {
+  color: #d6e9fc;
+  background-color: rgba(214, 233, 252, 0.27);
+  border-color: #d6e9fc;
 }
 
 .custom-file-input {
