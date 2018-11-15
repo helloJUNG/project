@@ -1,8 +1,7 @@
 package org.jj.controller;
 
-import java.util.List;
-
 import org.jj.domain.PageParam;
+import org.jj.domain.ReplyPageDTO;
 import org.jj.domain.ReplyVO;
 import org.jj.service.ReplyService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -46,17 +45,15 @@ public class ReplyController {
 	//리스트출력
 	@GetMapping(value="/pages/{bno}/{page}",
 				produces = {MediaType.APPLICATION_XML_VALUE, MediaType.APPLICATION_JSON_UTF8_VALUE})
-	public ResponseEntity<List<ReplyVO>> getList(@PathVariable("page")int page,@PathVariable("bno")int bno){
+	public ResponseEntity<ReplyPageDTO> getList(@PathVariable("page")int page,@PathVariable("bno")int bno){
 		
 		log.info("get reply list.....");
 		
 		PageParam pageParam = new PageParam();
 		pageParam.setPage(page);
 		pageParam.setBno(bno);
-		pageParam.setTotal(service.count(pageParam));
-		log.info(service.getList(pageParam));
 		
-		return new ResponseEntity<>(service.getList(pageParam),HttpStatus.OK);
+		return new ResponseEntity<>(service.getListPage(pageParam),HttpStatus.OK);
 	}
 	
 	//Get
@@ -73,8 +70,7 @@ public class ReplyController {
 	}
 	
 	//delete
-	@RequestMapping(method = {RequestMethod.PUT, RequestMethod.PATCH}, value="/delete/{rno}",
-					consumes="application/json", produces = {MediaType.TEXT_PLAIN_VALUE})
+	@DeleteMapping(value="/{rno}", produces = {MediaType.TEXT_PLAIN_VALUE})
 	public ResponseEntity<String> remove(@PathVariable("rno")int rno){
 		
 		log.info("remove: " + rno);

@@ -25,7 +25,7 @@ var replyService = (function(){
 	}//end add
 	
 	//getList
-	function getList(param, callback, error){
+	function getList(param,callback, error){
 		
 		var bno = param.bno;
 		
@@ -35,7 +35,9 @@ var replyService = (function(){
 			
 			function(data){
 				if(callback){
-					callback(data);
+					//callback(data);
+					
+					callback(data.replyCount, data.list);
 				}
 		}).fail(function(xhr,status,err){
 			if(error){

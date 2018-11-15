@@ -85,13 +85,13 @@ public class ReplyMapperTests {
 	@Test
 	public void testInsert() {
 		
-		IntStream.rangeClosed(1, 10).forEach(i -> {
+		IntStream.range(1, 250).forEach(i -> {
 			
 			ReplyVO vo = new ReplyVO();
 			
-			vo.setBno(bnoArr[i % 5]);
+			vo.setBno(379);
 			vo.setReply("test" + i);
-			vo.setReplyer("replyer"+i);
+			vo.setReplyer("zziggu"+i);
 			
 			mapper.insert(vo);
 		});

@@ -28,7 +28,7 @@ public class BoardServiceImpl implements BoardService {
 	@Override
 	public List<Board> getList(PageParam pageParam) {
 		// TODO Auto-generated method stub
-		return mapper.getList(pageParam);
+		return (List<Board>) mapper.getList(pageParam);
 	}
 
 	@Transactional
