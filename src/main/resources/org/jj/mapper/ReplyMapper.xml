@@ -28,7 +28,7 @@
 </select>
 
 <select id="getList" resultType="org.jj.domain.ReplyVO">
-	select * from tbl_reply where bno = #{bno} and bno > 0 order by rno asc
+	select * from tbl_reply where bno = #{bno} and bno > 0 and del='N' order by rno asc
 	limit #{skip},10
 </select>
 

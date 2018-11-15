@@ -51,8 +51,8 @@ var replyService = (function(){
 	function remove(rno, callback, error){
 		
 		$.ajax({
-			type:'put',
-			url:'/replies/delete/'+rno,
+			type:'delete',
+			url:'/replies/'+rno,
 			contentType:"application/json; charset=utf-8",
 			success:function(result, status, xhr){
 				if(callback){
