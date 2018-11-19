@@ -8,6 +8,6 @@
 </head>
 <body>
 <h1>Admin page</h1>
-
+<a href="/customLogout">Logout</a>
 </body>
 </html>
