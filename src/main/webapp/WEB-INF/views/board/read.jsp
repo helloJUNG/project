@@ -1,6 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>	
+<%@ taglib uri="http://www.springframework.org/security/tags" prefix="sec"%>  
 <%@include file="../includes/header.jsp"%>
 
 <div class="bigPictureWrapper">
@@ -108,7 +110,13 @@ form {
 					 <input type="hidden" name="page" value="${pageObj.page}">
 					 <input type="hidden" name="bno" value="${board.bno}">
 					 <input type="hidden" name="display" id="display" value="${pageObj.display}">
+					 
+					 <sec:authentication property="principal" var="pinfo"/>
+				<sec:authorize access="isAuthenticated()">
+				<c:if test="${pinfo.username eq board.writer}">
 					<button type="submit" class="btn btn-small btn-primary">Modify</button>
+				</c:if>
+				</sec:authorize>
 					<button id ="listBtn" type="submit" class="btn btn-small btn-primary">List</button>
 				</form>
 			</div>
@@ -189,6 +197,7 @@ form {
 					</div>
 				</div>
 				<div class="modal-footer">
+				
 					<button id="modalModBtn" type="button" class="btn btn-danger">Modify</button>
 					<button id="modalRemoveBtn" type="button" class="btn btn-danger">Remove</button>
 					<button id="modalRegisterBtn" type="button" class="btn btn-danger">Register</button>

@@ -1,5 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>	
+<%@ taglib uri="http://www.springframework.org/security/tags" prefix="sec"%>  
 <%@include file="../includes/header.jsp"%>
 
 <style>
@@ -66,7 +69,7 @@ form {
 
 			<div class="row col-xl-12 col-lg-12 col-md-12 col-sm-12">
 				<form role="form" action="/board/register" method="post">
-
+					<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
 					<div class="form-group">
 						<label class="col-xl-4 col-lg-4 col-md-4 col-sm-5 col-form-label">
 							Title </label> <input id="title" name="title" type="text" 
@@ -75,9 +78,9 @@ form {
 					</div>
 					<div class="form-group">
 						<label class="col-xl-4 col-lg-4 col-md-4 col-sm-5 col-form-label">
-							Writer </label> <input id="writer" name="writer" type="text" 
+							Writer </label> <input id="writer" name="writer" type="text" value='<sec:authentication property="principal.username"/>'
 							class="form-control validate col-xl-12 col-lg-12 col-md-12 col-sm-12"
-							data-large-mode="true" required>
+							data-large-mode="true" readonly="readonly" required>
 					</div>
 					<div class="form-group">
 						<label class="col-xl-4 col-lg-4 col-md-4 col-sm-5 mb-2">Content</label>
