@@ -11,12 +11,14 @@
 <bean id="customUserDetailsService" class="org.jj.security.CustomUserDetailsService"></bean>
 
 
-<security:http  >
+<security:http>
 		
 	
-	<security:intercept-url pattern="/board/*" access="hasRole('ROLE_MEMBER')" />
+	<security:intercept-url pattern="/board/register" access="isAuthenticated()" />
 	
 	<security:intercept-url pattern="/board/list" access="permitAll"/>
+	
+	
 	
 	<security:intercept-url pattern="/sample/admin" access="hasRole('ROLE_ADMIN')"/>		
 	
@@ -27,7 +29,7 @@
 	<security:logout logout-url="/customLogout" invalidate-session="true" delete-cookies="remember-me,JSESSION_ID"/>
 	
 	<security:remember-me data-source-ref="dataSource" token-validity-seconds="604800"/>
-	<security:csrf disabled="true"/> 
+	<!-- <security:csrf disabled="true"/>  -->
 </security:http>
 
 <security:authentication-manager>

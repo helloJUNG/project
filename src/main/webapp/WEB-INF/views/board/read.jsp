@@ -133,7 +133,9 @@ form {
 
 				</div>
 				<div class="col-4 text-right">
+					<sec:authorize access="isAuthenticated()">
 					<button class="btn-yj" id="addReplyBtn">add reply</button>
+					</sec:authorize>
 				</div>
 			</div>
 			<ul id="chat"
@@ -189,7 +191,9 @@ form {
 					</div>
 					<div class="form-group">
 						<label>Replyer</label>
-						<input class="form-control" name="replyer" value="replyer">
+						<sec:authorize access="isAuthenticated()">
+						<input class="form-control" name="replyer" value='<sec:authentication property="principal.username"/>'>
+						</sec:authorize>
 					</div>
 					<div class="form-group">
 						<label>Reply Date</label>
@@ -242,12 +246,26 @@ $(document).ready(function(){
 	var pageNum = 1;
 	var replyPageFooter = $(".panel-footer");
 	
+	var replyer =null;
+	
+	
+	var csrfHeaderName = "${_csrf.headerName}";
+	var csrfTokenValue = "${_csrf.token}";
+	
 	showList(1);
+	
+	//ajax spring security header
+	$(document).ajaxSend(function(e, xhr, options){
+		
+		xhr.setRequestHeader(csrfHeaderName, csrfTokenValue);
+		
+	});
 		
 	//댓글 추가
 	$("#addReplyBtn").on("click",function(e){
 		
 		modal.find("input").val("");
+		modal.find("input[name='replyer']").val(replyer);
 		modalInputReplyDate.closest("div").hide();
 		modal.find("button[id != 'modalCloseBtn']").hide();
 		
