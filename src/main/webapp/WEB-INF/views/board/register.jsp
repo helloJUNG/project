@@ -118,6 +118,9 @@ form {
 
 	$(document).ready(function(e){
 		
+		var csrfHeaderName="${_csrf.headerName}";
+		var csrfTokenValue="${_csrf.token}";
+		
 		var formObj = $("form[role='form']");
 		//서브밋 버튼
 		$("button[type='submit']").on("click",function(e){		
@@ -212,6 +215,9 @@ form {
 				
 				url:'/deleteFile',
 				data:{fileName:targetFile, type:type},
+				beforeSend: function(xhr){
+					xhr.setRequestHeader(csrfHeaderName,csrfTokenValue);
+				},
 				dataType:'text',
 				type:'POST',
 				success:function(result){
@@ -245,6 +251,9 @@ form {
 					url:'/uploadAjaxAction',
 					processData: false,
 					contentType: false,
+					beforSend: function(xhr){
+						xhr.setRequestHeader(csrfHeaderName, csrfTokenValue);
+					},
 					data:formData,
 					type:"POST",
 					dataType:"JSON",

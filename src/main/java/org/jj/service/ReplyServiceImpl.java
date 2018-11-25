@@ -37,14 +37,12 @@ public class ReplyServiceImpl implements ReplyService {
 
 	@Transactional
 	@Override
-	public int remove(PageParam pageParam) {
+	public int remove(ReplyVO vo) {
 		
-		log.info("remove...." + pageParam.getRno());
 		
-		ReplyVO vo = mapper.read(pageParam);
 		boardmapper.updateReplyCnt(vo.getBno(), -1);
 		
-		return mapper.delete(pageParam);
+		return mapper.delete(vo);
 	}
 
 	@Override

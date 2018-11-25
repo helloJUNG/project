@@ -11,7 +11,7 @@ public interface ReplyMapper {
 	
 	public ReplyVO read(PageParam pageParam);
 	
-	public int delete(PageParam pageParam);
+	public int delete(ReplyVO vo);
 	
 	public int update(ReplyVO vo);
 	

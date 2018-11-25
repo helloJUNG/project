@@ -9,7 +9,7 @@ import org.jj.domain.ReplyVO;
 public interface ReplyService {
 	
 	public int register(ReplyVO vo);
-	public int remove(PageParam pageParam);
+	public int remove(ReplyVO vo);
 	public int modify(ReplyVO vo);
 	public int replyCount(PageParam pageParam);
 	public ReplyVO get(PageParam pageParam);

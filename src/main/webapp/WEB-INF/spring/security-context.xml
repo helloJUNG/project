@@ -16,9 +16,11 @@
 	
 	<security:intercept-url pattern="/board/register" access="isAuthenticated()" />
 	
+	
 	<security:intercept-url pattern="/board/list" access="permitAll"/>
-	
-	
+	<security:intercept-url pattern="/board/read" access="permitAll"/>
+	<security:intercept-url pattern="/board/modify" access="isAuthenticated()"/>
+	<security:intercept-url pattern="/board/remove" access="isAuthenticated()"/>
 	
 	<security:intercept-url pattern="/sample/admin" access="hasRole('ROLE_ADMIN')"/>		
 	

@@ -48,11 +48,14 @@ var replyService = (function(){
 	}//end getList
 	
 	//remove
-	function remove(rno, callback, error){
+	function remove(rno, replyer, callback, error){
 		
 		$.ajax({
-			type:'delete',
-			url:'/replies/'+rno,
+			type:'put',
+			url:'/replies/remove/'+rno,
+			
+			data: JSON.stringify({replyer:replyer,rno:rno}),
+			
 			contentType:"application/json; charset=utf-8",
 			success:function(result, status, xhr){
 				if(callback){

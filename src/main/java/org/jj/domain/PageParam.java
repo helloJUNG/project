@@ -12,6 +12,7 @@ public class PageParam {
 	private int start,end,total,bno,rno;
 	private int display,page;
 	private double per;
+	
 
 	private boolean prev, next;
 	

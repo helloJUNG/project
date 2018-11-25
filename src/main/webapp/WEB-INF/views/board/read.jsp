@@ -191,9 +191,7 @@ form {
 					</div>
 					<div class="form-group">
 						<label>Replyer</label>
-						<sec:authorize access="isAuthenticated()">
-						<input class="form-control" name="replyer" value='<sec:authentication property="principal.username"/>'>
-						</sec:authorize>
+						<input class="form-control" name="replyer" value='' readonly="readonly">
 					</div>
 					<div class="form-group">
 						<label>Reply Date</label>
@@ -253,6 +251,10 @@ $(document).ready(function(){
 	var csrfTokenValue = "${_csrf.token}";
 	
 	showList(1);
+	
+	<sec:authorize access = "isAuthenticated()">
+	replyer = '<sec:authentication property="principal.username"/>';
+	</sec:authorize>
 	
 	//ajax spring security header
 	$(document).ajaxSend(function(e, xhr, options){
@@ -320,10 +322,27 @@ $(document).ready(function(){
 	//replyModify
 	modalModBtn.on("click",function(e){
 		
+		var originalReplyer = modalInputReplyer.val();
+		
 		var reply = {
 				rno:modal.data("rno"),
-				reply:modalInputReply.val()
+				reply:modalInputReply.val(),
+				replyer:originalReplyer
 		};
+		
+		if(!replyer){
+			alert("로그인 후 수정이 가능합니다.");
+			modal.modal("hide");
+			return;
+		}
+		console.log("OriginalReplyer: " + originalReplyer);
+		
+		if(replyer != originalReplyer){
+			alert("자신이 작성한 댓글만 수정이 가능합니다.");
+			modal.modal("hide");
+			return;
+		}
+				
 		replyService.update(reply, function(result){
 			
 			alert(result);
@@ -337,6 +356,25 @@ $(document).ready(function(){
 	modalRemoveBtn.on("click",function(e){
 		
 		var rno = modal.data("rno");
+		
+		console.log("RNO: " + rno);
+		console.log("REPLYER: " + replyer);
+		
+		if(!replyer){
+			alert("로그인 후 삭제가 가능합니다.");
+			modal.modal("hide");
+			return;
+		}
+		
+		var originalReplyer = modalInputReplyer.val();
+		console.log("Original Replyer: " + originalReplyer);
+		
+		if(replyer != originalReplyer){
+			
+			alert("자신이 작성한 댓글만 삭제가 가능합니다.");
+			modal.modal("hide");
+			return;
+		}
 		
 		replyService.remove(rno, function(result){
 			

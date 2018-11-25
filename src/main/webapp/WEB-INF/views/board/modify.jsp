@@ -1,6 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>	
+<%@ taglib uri="http://www.springframework.org/security/tags" prefix="sec"%>  
 <%@include file="../includes/header.jsp"%>
 
 <div class="bigPictureWrapper">
@@ -74,6 +76,7 @@ form {
 
 			<div class="row col-xl-12 col-lg-12 col-md-12 col-sm-12">
 				<form id='modifyForm' role="form" action="/board/modify" method="post" >
+					<input type="hidden" name="${_csrf.parameterName}" value="{_csrf.token}"/>
 					<div class="form-group">
 						<label class="col-xl-4 col-lg-4 col-md-4 col-sm-5 col-form-label">
 							Title </label> <input id="title" name="title" type="text" required
@@ -105,9 +108,14 @@ form {
 					<input type="hidden" name="bno" value="${board.bno}">
 					<input type="hidden" name="page" value="${pageObj.page}">
 					<input type="hidden" name="display" id="display" value="${pageObj.display}">
+					<sec:authentication property="principal" var="pinfo"/>
+					<sec:authorize access="isAuthenticated()">
+					<c:if test="${pinfo.username eq board.writer}">
 					<button id='modifyBtn'type="submit" data-oper="modify" class="btn btn-small btn-primary">Modify</button>
-					<button id='listBtn'type="submit" data-oper="list" class="btn btn-small btn-primary">List</button>
 					<button id='removeBtn' type="submit" data-oper="remove" class="btn btn-danger">Remove</button>
+					</c:if>
+					</sec:authorize>
+					<button id='listBtn'type="submit" data-oper="list" class="btn btn-small btn-primary">List</button>
 				</form>
 			</div>
 		</div>
@@ -130,6 +138,9 @@ $(document).ready(function(){
 	  //파일 타입
 	var regex = new RegExp("(.*?)\.(exe|sh|zip|alz)$");
 	var maxSize = 5242880;
+	
+	var csrfHeaderName = "${_csrf.headerName}";
+	var csrfTokenValue = "${_csrf.token}";
 	
 	//파일 체크
 	function checkExtension(fileName, fileSize){
@@ -304,6 +315,9 @@ $(document).ready(function(){
 				processData: false,
 				contentType: false,
 				data:formData,
+				beforeSend: function(xhr){
+					xhr.setRequestHeader(csrfHeaderName, csrfTokenValue);
+				}
 				type:"POST",
 				dataType:"JSON",
 				success:function(result){
