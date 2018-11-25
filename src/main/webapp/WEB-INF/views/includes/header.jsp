@@ -83,7 +83,7 @@
                             <li class="nav-item">
                             <form action="/customLogout" method="post">
              				<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
-                                <a class="nav-link d-flex" href="/board/list">
+                                <a class="nav-link d-flex" a herf="/customLogout">
                                     <i class="far fa-user mr-2 tm-logout-icon"></i>
                                     <span>Logout</span>
                                 </a>

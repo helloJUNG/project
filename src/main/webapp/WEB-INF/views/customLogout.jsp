@@ -15,6 +15,9 @@
 	<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
 	<button>로그아웃</button>
 </form>
+<script type="text/javascript">
+	self.location ="/board/list";
+</script>
 
 </body>
 </html>

@@ -49,12 +49,12 @@ public class ReplyMapperTests {
 		
 		ReplyVO vo = new ReplyVO();
 		vo.setRno(1);
-		vo.setReply("업데이트됫다123123");
+		vo.setReply("�뾽�뜲�씠�듃�맜�떎123123");
 		mapper.update(vo);
 		log.info(mapper.update(vo));
 	}
 	
-	@Test
+	/*@Test
 	public void testDelete() {
 		
 		PageParam pageParam = new PageParam();
@@ -63,7 +63,7 @@ public class ReplyMapperTests {
 		mapper.delete(pageParam);
 		
 	}
-	
+	*/
 	
 	@Test
 	public void testRead() {

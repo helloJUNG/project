@@ -1,3 +1,4 @@
 eclipse.preferences.version=1
 encoding//src/main/java/org/jj/controller/ReplyController.java=UTF-8
 encoding//src/main/java/org/jj/controller/UploadController.java=UTF-8
+encoding//src/test/java/org/jj/controller/ReplyMapperTests.java=UTF-8
