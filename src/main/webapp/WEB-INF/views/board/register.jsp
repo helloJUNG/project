@@ -118,9 +118,13 @@ form {
 
 	$(document).ready(function(e){
 		
-		var csrfHeaderName="${_csrf.headerName}";
-		var csrfTokenValue="${_csrf.token}";
-		
+		 var csrfHearderName = "${_csrf.headerName}";
+	      var csrfTokenValue = "${_csrf.token}";
+	      
+	      $(document).ajaxSend(function(e,xhr,options){
+	         xhr.setRequestHeader(csrfHearderName, csrfTokenValue);
+	      });
+	      
 		var formObj = $("form[role='form']");
 		//서브밋 버튼
 		$("button[type='submit']").on("click",function(e){		

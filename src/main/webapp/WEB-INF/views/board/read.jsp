@@ -380,8 +380,9 @@ $(document).ready(function(){
 			
 			alert(result);
 			modal.modal("hide");
-			showList(pageNum);
+			showList(pageNum);	
 		});
+		
 		
 	});//end
 	

@@ -162,6 +162,7 @@ $(document).ready(function(){
 			var formData = new FormData();
 			var inputFile = $("input[name='uploadFile']");
 			var files = inputFile[0].files;
+			console.log(inputFile[0]);
 			console.log(files);
 			
 			for(var i = 0 ; i < files.length; i++){
@@ -172,6 +173,7 @@ $(document).ready(function(){
 				}
 				
 				formData.append("uploadFile",files[i]);
+				console.log("uplaodFile");
 			}
 			
 			$.ajax({
@@ -186,8 +188,9 @@ $(document).ready(function(){
 					console.log(result);
 					
 					showUploadedFile(result);
-					
+					console.log(cloneObj);
 					$(".uploadDiv").html(cloneObj.html()); //upload하고 input type="file" 부분 초기화
+					
 				}
 				
 			});//$.ajax

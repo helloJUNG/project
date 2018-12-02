@@ -11,13 +11,13 @@
 
 <h1>Logout Page</h1>
 
-<form action="/customLogout" method="post">
+<form action="/logout" method="post">
 	<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
 	<button>로그아웃</button>
 </form>
-<script type="text/javascript">
+<!-- <script type="text/javascript">
 	self.location ="/board/list";
-</script>
+</script> -->
 
 </body>
 </html>

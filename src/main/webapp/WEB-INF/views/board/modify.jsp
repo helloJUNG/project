@@ -108,11 +108,13 @@ form {
 					<input type="hidden" name="bno" value="${board.bno}">
 					<input type="hidden" name="page" value="${pageObj.page}">
 					<input type="hidden" name="display" id="display" value="${pageObj.display}">
+					<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"> 
 					<sec:authentication property="principal" var="pinfo"/>
 					<sec:authorize access="isAuthenticated()">
 					<c:if test="${pinfo.username eq board.writer}">
 					<button id='modifyBtn'type="submit" data-oper="modify" class="btn btn-small btn-primary">Modify</button>
 					<button id='removeBtn' type="submit" data-oper="remove" class="btn btn-danger">Remove</button>
+						
 					</c:if>
 					</sec:authorize>
 					<button id='listBtn'type="submit" data-oper="list" class="btn btn-small btn-primary">List</button>
@@ -139,9 +141,13 @@ $(document).ready(function(){
 	var regex = new RegExp("(.*?)\.(exe|sh|zip|alz)$");
 	var maxSize = 5242880;
 	
-	var csrfHeaderName = "${_csrf.headerName}";
-	var csrfTokenValue = "${_csrf.token}";
-	
+	 var csrfHearderName = "${_csrf.headerName}";
+     var csrfTokenValue = "${_csrf.token}";
+     
+     $(document).ajaxSend(function(e,xhr,options){
+        xhr.setRequestHeader(csrfHearderName, csrfTokenValue);
+     });
+     
 	//파일 체크
 	function checkExtension(fileName, fileSize){
 		
@@ -265,7 +271,8 @@ $(document).ready(function(){
 			if(operation === 'remove'){
 				formObj=$("#removeBtn");
 				console.log("submit remove....")
-				actionForm.attr("action","/board/remove").attr("method","post").submit();	
+			
+					actionForm.attr("action","/board/remove").attr("method","post").submit();	
 				
 			}else if(operation === 'list'){
 				formObj=$("#listBtn");
@@ -317,7 +324,7 @@ $(document).ready(function(){
 				data:formData,
 				beforeSend: function(xhr){
 					xhr.setRequestHeader(csrfHeaderName, csrfTokenValue);
-				}
+				},
 				type:"POST",
 				dataType:"JSON",
 				success:function(result){

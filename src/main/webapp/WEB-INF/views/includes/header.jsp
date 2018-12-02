@@ -1,5 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>    
 <%@ taglib uri="http://www.springframework.org/security/tags" prefix="sec"%>      
 <!DOCTYPE html>
 <html lang="en">
@@ -25,6 +27,7 @@
     <link rel="stylesheet" href="/resources/css/bootstrap.min.css">
     <!-- https://getbootstrap.com/ -->
     <link rel="stylesheet" href="/resources/css/tooplate.css">
+    
 </head>
 
 <body class="backboard">
@@ -81,9 +84,9 @@
                         <ul class="navbar-nav">
              				<sec:authorize access="isAuthenticated()">	
                             <li class="nav-item">
-                            <form action="/customLogout" method="post">
+                            <form action="/user/customLogout" method="post">
              				<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
-                                <a class="nav-link d-flex" a herf="/customLogout">
+                                <a class="nav-link d-flex" a herf="/board/list">
                                     <i class="far fa-user mr-2 tm-logout-icon"></i>
                                     <span>Logout</span>
                                 </a>
@@ -92,7 +95,7 @@
                             </sec:authorize>
                             <sec:authorize access="isAnonymous()">
                             <li class="nav-item">
-                                <a class="nav-link d-flex" href="/customLogin">
+                                <a class="nav-link d-flex" href="/user/customLogin">
                                     <i class="far fa-user mr-2 tm-logout-icon"></i>
                                     <span>Login</span>
                                 </a>
@@ -103,3 +106,5 @@
                 </nav>
             </div>
         </div>
+
+     

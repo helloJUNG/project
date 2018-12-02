@@ -14,21 +14,19 @@
 <security:http>
 		
 	
-	<security:intercept-url pattern="/board/register" access="isAuthenticated()" />
+	<security:intercept-url pattern="/board/*" access="hasRole('ROLE_ADMIN')" />
 	
 	
-	<security:intercept-url pattern="/board/list" access="permitAll"/>
-	<security:intercept-url pattern="/board/read" access="permitAll"/>
-	<security:intercept-url pattern="/board/modify" access="isAuthenticated()"/>
-	<security:intercept-url pattern="/board/remove" access="isAuthenticated()"/>
+	
+
 	
 	<security:intercept-url pattern="/sample/admin" access="hasRole('ROLE_ADMIN')"/>		
 	
 	<security:access-denied-handler ref="customAccessDenied"/>
 	
-	<security:form-login login-page="/customLogin"/>
+	<security:form-login login-page="/user/customLogin"/>
 	
-	<security:logout logout-url="/customLogout" invalidate-session="true" delete-cookies="remember-me,JSESSION_ID"/>
+	<security:logout logout-url="/user/customLogout" invalidate-session="true" delete-cookies="remember-me,JSESSION_ID"/>
 	
 	<security:remember-me data-source-ref="dataSource" token-validity-seconds="604800"/>
 	<!-- <security:csrf disabled="true"/>  -->

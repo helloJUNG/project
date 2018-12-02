@@ -89,7 +89,7 @@ public class BoardController {
 		return new ResponseEntity<>(service.getAttachList(bno),HttpStatus.OK);
 	}
 	
-	@PreAuthorize("principal.username == #writer")
+
 	@PostMapping("/remove")
 	public String remove(@RequestParam("bno") int bno, RedirectAttributes rttr,PageParam pageParam) {
 		log.info("remove--------------------------------------------");
@@ -108,7 +108,7 @@ public class BoardController {
 		return "redirect:/board/list?page=" + pageParam.getPage()+"&display="+pageParam.getDisplay();
 	}
 	
-	@PreAuthorize("principal.username == #board.writer")
+	
 	@PostMapping("/modify")
 	public String modify(RedirectAttributes rttr,Board board, PageParam pageParam) {
 		
